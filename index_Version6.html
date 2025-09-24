@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>訂便當統計系統</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <style>
+    body { font-family: 'Segoe UI','Microsoft JhengHei',Arial,sans-serif; background:#f8fafc; margin:0;}
+    .container { max-width:520px; margin:30px auto; background:#fff; border-radius:10px; box-shadow:0 3px 10px #ddd; padding:24px;}
+    h1 { text-align: center; color:#3b82f6;}
+    form { display:flex;flex-direction:column;gap:12px;margin-bottom:24px;}
+    input,select { font-size:16px;padding:7px 10px; border:1px solid #d1d5db; border-radius:5px;}
+    button { background:#3b82f6;color:#fff;border:none;padding:10px;border-radius:7px;font-size:16px;cursor:pointer;}
+    button:active { background:#2563eb;}
+    .stat,.orders { margin-bottom:18px;}
+    table { width:100%; border-collapse:collapse; margin-top:8px;}
+    th,td { border:1px solid #e5e7eb; padding:7px 4px; text-align:center;}
+    th { background:#f1f5f9;}
+    td img, .preview-img { max-width:48px; max-height:48px; border-radius:6px; display:inline-block;}
+    .download-btns { display:flex;gap:10px;margin-top:10px;}
+    .clear-btn { margin-top:12px; color:#ef4444; background:#fff; border:1px solid #ef4444;}
+    .clear-btn:active { background:#fee2e2; }
+    .img-preview-box { display:flex;align-items:center;gap:8px;margin-top:2px;}
+    @media (max-width:600px){.container{max-width:98vw; padding:12px;}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>訂便當統計系統</h1>
+    <form id="order-form">
+      <input type="text" id="name" placeholder="姓名" required />
+      <select id="type" required>
+        <option value="">選擇便當種類</option>
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+      </select>
+      <input type="number" id="qty" placeholder="數量" min="1" value="1" required />
+      <input type="file" id="img" accept="image/*" />
+      <div class="img-preview-box" id="img-preview-box"></div>
+      <button type="submit">送出訂單</button>
+    </form>
+
+    <div class="stat" id="stats"></div>
+    <div class="orders" id="orders"></div>
+    <div class="download-btns">
+      <button onclick="downloadCSV()">下載 CSV</button>
+      <button onclick="downloadExcel()">下載 Excel</button>
+    </div>
+    <button class="clear-btn" onclick="clearOrders()">清空所有訂單</button>
+    <div style="text-align:center;color:#94a3b8;margin-top:18px;font-size:13px;">
+      設計：aya208 | Powered by Copilot Agent
+    </div>
+  </div>
+
+  <script>
+    const LS_KEY = "bento_orders";
+    let orders = [];
+    let imgPreviewData = "";
+
+    function saveOrders() {
+      localStorage.setItem(LS_KEY, JSON.stringify(orders));
+    }
+    function loadOrders() {
+      const data = localStorage.getItem(LS_KEY);
+      orders = data ? JSON.parse(data) : [];
+    }
+    function updateStats() {
+      const statsDiv = document.getElementById('stats');
+      if (!orders.length) {
+        statsDiv.innerHTML = '<span style="color:#888;">目前尚無訂單</span>';
+        return;
+      }
+      const stats = {A:0,B:0,C:0};
+      let total = 0;
+      orders.forEach(o => {
+        stats[o.type] += Number(o.qty);
+        total += Number(o.qty);
+      });
+      statsDiv.innerHTML = `
+        <b>便當種類統計：</b>
+        <table>
+          <tr><th>種類</th><th>數量</th></tr>
+          <tr><td>A</td><td>${stats.A}</td></tr>
+          <tr><td>B</td><td>${stats.B}</td></tr>
+          <tr><td>C</td><td>${stats.C}</td></tr>
+        </table>
+        <div style="margin-top:8px;">
+          <b>訂單總數量：</b> ${total}
+        </div>
+      `;
+    }
+    function updateOrders() {
+      const ordersDiv = document.getElementById('orders');
+      if (!orders.length) {
+        ordersDiv.innerHTML = '';
+        return;
+      }
+      let html = '<b>所有訂單：</b><table><tr><th>姓名</th><th>便當種類</th><th>數量</th><th>圖片</th></tr>';
+      orders.forEach(o => {
+        html += `<tr>
+          <td>${o.name}</td>
+          <td>${o.type}</td>
+          <td>${o.qty}</td>
+          <td>${o.img ? `<img src="${o.img}" alt="${o.imgName}">` : ''}</td>
+        </tr>`;
+      });
+      html += '</table>';
+      ordersDiv.innerHTML = html;
+    }
+    // 即時預覽圖片
+    document.getElementById('img').addEventListener('change', function(e){
+      const previewBox = document.getElementById('img-preview-box');
+      previewBox.innerHTML = "";
+      imgPreviewData = "";
+      if(this.files && this.files[0]) {
+        const file = this.files[0];
+        const reader = new FileReader();
+        reader.onload = function(ev){
+          imgPreviewData = ev.target.result;
+          const img = document.createElement('img');
+          img.src = imgPreviewData;
+          img.className = "preview-img";
+          img.alt = file.name;
+          previewBox.appendChild(img);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+    document.getElementById('order-form').addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const type = document.getElementById('type').value;
+      const qty = document.getElementById('qty').value;
+      const imgInput = document.getElementById('img');
+      let imgData = imgPreviewData;
+      let imgName = imgInput.files.length ? imgInput.files[0].name : "";
+      if (name && type && qty > 0) {
+        orders.push({
+          name,
+          type,
+          qty,
+          img: imgData,
+          imgName: imgName
+        });
+        saveOrders();
+        updateStats();
+        updateOrders();
+        document.getElementById('order-form').reset();
+        imgPreviewData = "";
+        document.getElementById('img-preview-box').innerHTML = "";
+        document.getElementById('qty').value = 1;
+      }
+    });
+    function downloadCSV() {
+      if (!orders.length) return alert('尚無資料');
+      let csv = "姓名,便當種類,數量,圖片檔名\n";
+      orders.forEach(o => {
+        csv += `"${o.name}","${o.type}","${o.qty}","${o.imgName}"\n`;
+      });
+      const blob = new Blob([csv], {type: "text/csv;charset=utf-8;"});
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "訂便當統計.csv";
+      link.click();
+    }
+    function downloadExcel() {
+      if (!orders.length) return alert('尚無資料');
+      let table = `<table><tr><th>姓名</th><th>便當種類</th><th>數量</th><th>圖片檔名</th></tr>`;
+      orders.forEach(o => {
+        table += `<tr>
+          <td>${o.name}</td>
+          <td>${o.type}</td>
+          <td>${o.qty}</td>
+          <td>${o.imgName}</td>
+        </tr>`;
+      });
+      table += `</table>`;
+      let html = `
+        <html xmlns:o="urn:schemas-microsoft-com:office:office"
+              xmlns:x="urn:schemas-microsoft-com:office:excel"
+              xmlns="http://www.w3.org/TR/REC-html40">
+        <head><meta charset="UTF-8"></head><body>${table}</body></html>
+      `;
+      const blob = new Blob([html], {type: "application/vnd.ms-excel"});
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "訂便當統計.xls";
+      link.click();
+    }
+    function clearOrders() {
+      if (confirm("確定要清空所有訂單？這個動作不可復原！")) {
+        orders = [];
+        saveOrders();
+        updateStats();
+        updateOrders();
+      }
+    }
+    // 初次載入
+    loadOrders();
+    updateStats();
+    updateOrders();
+  </script>
+</body>
+</html>
