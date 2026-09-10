@@ -1,0 +1,2817 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="theme-color" content="#2F2858"/>
+<title>影片製作流程 · 工作台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --purple:#5B4FE0;--purple-dark:#3F35A8;--purple-light:#EFEDFF;
+  --ink:#171321;--gold:#C9A24B;
+  --border:#E7E4F0;--bg:#fff;--bg2:#F7F6FB;
+  --text:#1A1626;--text2:#5C5670;--text3:#A39FB5;
+  --radius:10px;--radius-lg:16px;
+  --shadow-sm:0 1px 2px rgba(23,19,33,.05),0 1px 1px rgba(23,19,33,.03);
+  --shadow-md:0 6px 20px -4px rgba(60,52,137,.12),0 2px 6px rgba(23,19,33,.05);
+  --shadow-lg:0 16px 48px -8px rgba(60,52,137,.22),0 4px 16px rgba(23,19,33,.08);
+  --font-display:'Fraunces',Georgia,serif;
+  --font-body:'Plus Jakarta Sans','Inter',-apple-system,sans-serif;
+}
+body.dark-mode{
+  --border:#332F42;--bg:#1C1926;--bg2:#141220;
+  --text:#EDEBF5;--text2:#AFA9C4;--text3:#726C85;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.35),0 1px 1px rgba(0,0,0,.22);
+  --shadow-md:0 6px 20px -4px rgba(0,0,0,.5),0 2px 6px rgba(0,0,0,.28);
+  --shadow-lg:0 16px 48px -8px rgba(0,0,0,.6),0 4px 16px rgba(0,0,0,.32);
+}
+body{font-family:var(--font-body);color:var(--text);background:var(--bg2);min-height:100vh;background-image:radial-gradient(circle at 0% 0%,rgba(91,79,224,.05),transparent 45%),radial-gradient(circle at 100% 0%,rgba(201,162,75,.05),transparent 40%);transition:background-color .2s,color .2s}
+body.dark-mode{background-image:radial-gradient(circle at 0% 0%,rgba(91,79,224,.1),transparent 45%),radial-gradient(circle at 100% 0%,rgba(201,162,75,.07),transparent 40%)}
+body.dark-mode img:not(.no-dark-dim){filter:brightness(.92)}
+
+.topbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 24px;background:linear-gradient(165deg,#1C1730 0%,#241D3D 100%);box-shadow:0 4px 16px -6px rgba(23,19,33,.35)}
+.topbar-title{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-size:18px;font-weight:600;color:#fff}
+.topbar-title .logo-badge{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--purple) 0%,#8A7FFF 100%);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 16px rgba(91,79,224,.5)}
+.topbar-title .logo-badge i{color:#fff;font-size:16px}
+.dark-toggle{width:34px;height:34px;border-radius:10px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px}
+.dark-toggle:hover{background:rgba(255,255,255,.12)}
+.page-wrap{max-width:1100px;margin:0 auto;padding:26px 20px 80px}
+@media (max-width:640px){ .page-wrap{padding:18px 14px 70px} .topbar{padding:14px 16px} }
+
+button{font-family:inherit}
+.btn-primary{display:flex;align-items:center;gap:6px;padding:11px 20px;background:linear-gradient(135deg,var(--purple) 0%,var(--purple-dark) 100%);color:#fff;border:none;border-radius:999px;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;box-shadow:var(--shadow-sm);transition:box-shadow .15s,transform .12s cubic-bezier(.34,1.56,.64,1)}
+.btn-primary:hover{box-shadow:var(--shadow-md)}
+.btn-primary:active{transform:scale(.96)}
+.btn-ghost{padding:9px 15px;border:1px solid var(--border);border-radius:var(--radius);font-size:13.5px;background:transparent;cursor:pointer;color:var(--text2);transition:background .12s,border-color .12s,transform .1s}
+.btn-ghost:hover{background:var(--bg2);border-color:#D8D2F2;color:var(--text)}
+.btn-ghost:active{transform:scale(.96)}
+.icon-btn{padding:7px;border:none;background:transparent;cursor:pointer;color:var(--text3);border-radius:8px;display:flex;align-items:center;font-size:15px;line-height:1;transition:background .12s,color .12s,transform .1s}
+.icon-btn:hover{background:var(--bg2);color:var(--text)}
+.icon-btn:active{transform:scale(.9)}
+.icon-btn.active-toggle{background:var(--purple-light);color:var(--purple)}
+.form-label{font-size:13px;color:var(--text2);font-weight:600;margin-bottom:6px;display:block}
+.form-group{margin-bottom:14px}
+.sn-insp-prompt-box{background:var(--bg2);border:1px dashed var(--border);border-radius:12px;padding:14px 16px;margin-top:8px}
+.sn-insp-prompt-en{font-size:14px;color:var(--text);line-height:1.75;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;word-break:break-word}
+input,select,textarea{font-family:inherit;color:inherit;font-size:14px}
+.inp{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:9px;background:var(--bg2);font-size:14px}
+.inp:focus{outline:none;border-color:var(--purple);background:var(--bg)}
+
+/* ent-page shared layout */
+.ent-page{max-width:820px;padding-bottom:40px}
+.ent-header{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:22px;flex-wrap:wrap}
+.ent-header-title{font-family:var(--font-display);font-size:24px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:10px}
+.ent-header-sub{font-size:14px;color:var(--text3);margin-top:5px;line-height:1.6;max-width:52ch}
+.ent-empty{text-align:center;padding:70px 20px;color:var(--text3);font-size:15px;line-height:1.8}
+
+/* 🎬 影片製作流程 — 專案卡片 */
+.vf-project-card{background:var(--bg);border:1px solid var(--border);border-radius:18px;padding:20px 22px;margin-bottom:16px;box-shadow:var(--shadow-sm)}
+.vf-project-head{display:flex;align-items:center;gap:12px;cursor:pointer}
+.vf-project-title{font-size:17px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:7px}
+.vf-project-meta{font-size:13px;color:var(--text3);margin-top:4px}
+.vf-progress-bar{height:8px;border-radius:99px;background:var(--bg2);overflow:hidden;margin-top:12px}
+.vf-progress-fill{height:100%;background:linear-gradient(90deg,var(--purple),#8b5cf6);border-radius:99px;transition:width .3s}
+
+/* 步驟時間軸：加大點擊區、加大字級，讓整條流程一眼就能看懂進度 */
+.vf-steps{margin-top:22px;padding-left:2px;display:flex;flex-direction:column}
+
+/* 精靈模式：一次只顯示目前這一步，配上一步／下一步導覽 */
+.vf-wizard{margin-top:22px}
+.vf-wizard-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.vf-wizard-count{font-size:13px;font-weight:700;color:var(--text2);flex-shrink:0}
+.vf-wizard-nav .btn-ghost{font-size:13px}
+.vf-wizard-nav .btn-ghost:disabled{opacity:.4;cursor:default;pointer-events:none}
+.vf-wizard .vf-step{padding-left:44px}
+.vf-wizard-done-msg{margin-top:16px;text-align:center;font-size:14px;font-weight:600;color:#2e7d32;background:rgba(46,125,50,.1);border-radius:12px;padding:16px}
+.vf-step{position:relative;padding-left:44px;padding-bottom:22px}
+.vf-step:last-child{padding-bottom:0}
+.vf-step::before{content:'';position:absolute;left:15px;top:32px;bottom:0;width:2px;background:var(--border)}
+.vf-step:last-child::before{display:none}
+.vf-step-dot{position:absolute;left:0;top:1px;width:32px;height:32px;border-radius:50%;background:var(--bg2);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:var(--text3);cursor:pointer;flex-shrink:0;transition:background .15s,border-color .15s}
+.vf-step.done .vf-step-dot{background:var(--purple);border-color:var(--purple);color:#fff}
+.vf-step-head{display:flex;align-items:center;gap:10px;cursor:pointer;min-height:32px;flex-wrap:wrap;row-gap:4px}
+.vf-step-title{font-size:15.5px;font-weight:600;color:var(--text)}
+.vf-step.done .vf-step-title{color:var(--text2)}
+.vf-step-tool{font-size:12px;font-weight:600;color:var(--purple-dark);background:var(--purple-light);padding:3px 10px;border-radius:99px}
+.vf-step-done-badge{font-size:11px;font-weight:700;color:#fff;background:var(--purple);padding:3px 10px;border-radius:99px;display:inline-flex;align-items:center;gap:3px;flex-shrink:0}
+.vf-step-body{margin-top:12px;background:var(--bg2);border-radius:14px;padding:16px 18px}
+.vf-step-desc{font-size:14px;color:var(--text2);line-height:1.75;margin-bottom:14px}
+.vf-step-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.vf-step-nolink{font-size:13px;color:var(--purple-dark);background:var(--purple-light);border-radius:10px;padding:10px 13px;margin-bottom:10px;line-height:1.6}
+.vf-prompt-preview{max-height:110px;overflow:hidden;position:relative;background:#fff;border-color:#e2e2e2}
+.vf-prompt-preview .sn-insp-prompt-en{color:#1a1a1a}
+.vf-prompt-preview::after{content:'';position:absolute;left:0;right:0;bottom:0;height:32px;background:linear-gradient(transparent,#fff)}
+.vf-prompt-preview.expanded{max-height:none;overflow:visible}
+.vf-prompt-preview.expanded::after{display:none}
+.vf-prompt-version-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.vf-prompt-version-tab{padding:6px 13px;font-size:12.5px;font-weight:600;border-radius:999px;border:1px solid var(--border);background:var(--bg2);color:var(--text2);cursor:pointer;white-space:nowrap;transition:background .12s,border-color .12s,color .12s,transform .1s}
+.vf-prompt-version-tab:hover{color:var(--text);border-color:#D8D2F2}
+.vf-prompt-version-tab:active{transform:scale(.95)}
+.vf-prompt-version-tab.active{background:linear-gradient(135deg,var(--purple) 0%,#8b5cf6 100%);color:#fff;border-color:transparent;box-shadow:0 3px 10px -3px rgba(91,79,224,.5)}
+
+/* ── 工具列：搜尋單獨一列，其他篩選/排序/檢視選項收在同一列並允許換行，降低擁擠感 ── */
+.vf-toolbar{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--border)}
+.vf-toolbar-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.vf-toolbar-search{flex:1 1 220px;min-width:0;position:relative}
+.vf-toolbar-search i{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:15px;color:var(--text3)}
+.vf-toolbar-search input{width:100%;padding:10px 12px 10px 36px;font-size:14px;border:1px solid var(--border);border-radius:10px;background:var(--bg2);color:var(--text)}
+.vf-toolbar-search input:focus{outline:none;border-color:var(--purple)}
+.vf-toolbar select{padding:9px 11px;font-size:13.5px;border:1px solid var(--border);border-radius:10px;background:var(--bg2);color:var(--text);cursor:pointer}
+.vf-toolbar-btn{display:flex;align-items:center;gap:6px;padding:9px 14px;font-size:13.5px;font-weight:600;border-radius:10px;border:1px solid var(--border);background:var(--bg2);color:var(--text2);cursor:pointer;white-space:nowrap}
+.vf-toolbar-btn:hover{color:var(--text);border-color:var(--purple)}
+.vf-toolbar-btn.active{background:linear-gradient(135deg,var(--purple) 0%,#8b5cf6 100%);color:#fff;border-color:transparent}
+.vf-stats-panel{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-top:2px}
+.vf-stats-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px 16px}
+.vf-stats-num{font-family:var(--font-display);font-size:26px;font-weight:600;color:var(--purple)}
+.vf-stats-label{font-size:12px;color:var(--text3);margin-top:4px}
+.vf-project-card.archived{opacity:.62}
+.vf-project-card.archived .vf-project-title{text-decoration:line-through;text-decoration-color:var(--text3)}
+
+/* ── 左側專案選單：不同影片專案改成清單列在左邊，右邊只顯示選中的那一個 ── */
+.vf-layout{display:flex;gap:20px;align-items:flex-start}
+.vf-sidebar{width:250px;flex-shrink:0;background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:14px;position:sticky;top:82px;max-height:calc(100vh - 110px);overflow-y:auto;display:flex;flex-direction:column;gap:10px}
+.vf-sidebar-add{width:100%;justify-content:center}
+.vf-sidebar-search{position:relative}
+.vf-sidebar-search i{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:14px;color:var(--text3)}
+.vf-sidebar-search input{width:100%;padding:9px 10px 9px 32px;font-size:13.5px;border:1px solid var(--border);border-radius:9px;background:var(--bg2);color:var(--text)}
+.vf-sidebar-search input:focus{outline:none;border-color:var(--purple)}
+.vf-sidebar-toolrow{display:flex;gap:6px;flex-wrap:wrap}
+.vf-sidebar-toolbtn{flex:1;display:flex;align-items:center;justify-content:center;gap:5px;padding:7px 8px;font-size:12px;font-weight:600;border-radius:8px;border:1px solid var(--border);background:var(--bg2);color:var(--text2);cursor:pointer;white-space:nowrap}
+.vf-sidebar-toolbtn:hover{color:var(--text);border-color:#D8D2F2}
+.vf-sidebar-toolbtn.active{background:linear-gradient(135deg,var(--purple) 0%,#8b5cf6 100%);color:#fff;border-color:transparent}
+.vf-sidebar select{width:100%}
+.vf-sidebar-list{display:flex;flex-direction:column;gap:6px;overflow-y:auto}
+.vf-sidebar-item{display:flex;align-items:center;gap:10px;padding:8px 9px;border-radius:11px;cursor:pointer;border:1px solid transparent;transition:background .12s,border-color .12s}
+.vf-sidebar-item:hover{background:var(--bg2)}
+.vf-sidebar-item.active{background:var(--purple-light);border-color:var(--purple)}
+.vf-sidebar-item.archived{opacity:.6}
+.vf-sidebar-thumb{width:34px;height:34px;border-radius:8px;object-fit:cover;flex-shrink:0;background:var(--bg2);border:1px solid var(--border)}
+.vf-sidebar-item-body{min-width:0;flex:1}
+.vf-sidebar-item-title{font-size:13px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:4px}
+.vf-sidebar-item.active .vf-sidebar-item-title{color:var(--purple-dark)}
+.vf-sidebar-item-meta{font-size:11px;color:var(--text3);margin-top:2px}
+.vf-sidebar-mini-bar{height:4px;border-radius:99px;background:var(--border);overflow:hidden;margin-top:5px}
+.vf-sidebar-mini-fill{height:100%;background:linear-gradient(90deg,var(--purple),#8b5cf6);border-radius:99px}
+.vf-main{flex:1;min-width:0}
+.vf-main-empty{text-align:center;padding:70px 20px;color:var(--text3);font-size:14px;line-height:1.8;background:var(--bg);border:1px dashed var(--border);border-radius:16px}
+@media (max-width:860px){
+  .vf-layout{flex-direction:column}
+  .vf-sidebar{width:100%;position:static;max-height:none}
+  .vf-sidebar-list{flex-direction:row;overflow-x:auto;overflow-y:visible;padding-bottom:2px}
+  .vf-sidebar-item{flex-shrink:0;min-width:168px}
+}
+.vf-thumb{width:44px;height:44px;border-radius:10px;object-fit:cover;flex-shrink:0;border:1px solid var(--border)}
+.vf-stall-badge{font-size:11px;font-weight:700;color:#B5591A;background:rgba(201,162,75,.16);padding:3px 9px;border-radius:99px;display:inline-flex;align-items:center;gap:3px;margin-left:8px}
+.vf-done-all-badge{font-size:11px;font-weight:700;color:#2e7d32;background:rgba(46,125,50,.12);padding:3px 9px;border-radius:99px;display:inline-flex;align-items:center;gap:3px;margin-left:8px}
+.vf-step.hidden-step{opacity:.5}
+.vf-step-skip-toggle{font-size:12px;color:var(--text3);cursor:pointer;padding:4px 9px;border-radius:8px;flex-shrink:0}
+.vf-step-skip-toggle:hover{color:var(--text);background:var(--bg)}
+.vf-step-skipped-note{font-size:13px;color:var(--text3);padding:8px 0 0 0;display:flex;align-items:center;gap:6px}
+.vf-cover-upload{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.vf-cover-thumb-lg{width:76px;height:76px;border-radius:11px;object-fit:cover;border:1px solid var(--border);flex-shrink:0;background:var(--bg2)}
+.vf-yt-preview{display:flex;align-items:center;gap:11px;margin-top:10px;padding:10px 12px;background:#fff;border-radius:11px;border:1px solid var(--border)}
+.vf-yt-preview img{width:76px;height:43px;object-fit:cover;border-radius:6px;flex-shrink:0}
+.vf-yt-preview a{font-size:13px;color:var(--purple);text-decoration:none;word-break:break-all}
+.vf-insert-row{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--text3);cursor:pointer;padding:6px 0 6px 44px;margin:-2px 0;opacity:.6;transition:opacity .12s,color .12s;user-select:none}
+.vf-insert-row:hover{opacity:1;color:var(--purple)}
+.vf-step.custom-step{padding-bottom:22px}
+.vf-step.custom-step .vf-step-dot{background:var(--purple-light);border-color:var(--purple)}
+.vf-step.custom-step.done .vf-step-dot{background:var(--purple);border-color:var(--purple)}
+.vf-step.custom-step .vf-step-title{color:var(--purple-dark)}
+.icon-btn.has-note{color:#B5591A;position:relative}
+.icon-btn.has-note::after{content:'';position:absolute;top:3px;right:2px;width:7px;height:7px;border-radius:50%;background:#F0C24B;border:1.5px solid var(--bg)}
+.vf-sticky-note{margin-top:14px;background:#FFF6D6;border:1px solid #F0D98C;border-radius:12px 12px 12px 3px;padding:12px 14px 13px;box-shadow:0 3px 10px -4px rgba(180,140,20,.35);transform:rotate(-.3deg)}
+body.dark-mode .vf-sticky-note{background:#3A3320;border-color:#5C512E}
+.vf-sticky-head{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:6px;font-size:12px;font-weight:700;color:#8A6A1A}
+.vf-sticky-close{cursor:pointer;color:#8A6A1A;opacity:.7}
+.vf-sticky-close:hover{opacity:1}
+.vf-sticky-textarea{width:100%;border:none;background:transparent;resize:vertical;min-height:52px;font-size:14px;color:#4A3B10;font-family:inherit;line-height:1.6}
+.vf-sticky-textarea:focus{outline:none}
+body.dark-mode .vf-sticky-textarea{color:#EDE0B8}
+
+/* 展開時的卡片：加一圈強調色外框，讓「目前在哪」一眼可見，捲動定位也更明確 */
+.vf-project-card.expanded{border-color:var(--purple);box-shadow:0 0 0 3px var(--purple-light),var(--shadow-md)}
+.vf-step.expanded .vf-step-dot{box-shadow:0 0 0 4px var(--purple-light)}
+
+/* toast */
+.toast-stack{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:999;display:flex;flex-direction:column-reverse;gap:8px;align-items:center;pointer-events:none;max-width:92vw}
+.toast-item{position:relative;display:flex;align-items:flex-start;gap:9px;background:#1A1826;color:#fff;padding:10px 16px 10px 13px;border-radius:11px;font-size:12.5px;line-height:1.5;max-width:420px;white-space:normal;overflow:hidden;pointer-events:auto;cursor:pointer;border-left:3px solid var(--toast-accent,var(--purple));box-shadow:0 10px 30px -8px rgba(0,0,0,.45),0 2px 8px rgba(0,0,0,.22);opacity:0;transform:translateY(14px) scale(.94);transition:opacity .32s cubic-bezier(.34,1.56,.64,1),transform .32s cubic-bezier(.34,1.56,.64,1)}
+.toast-item.show{opacity:1;transform:translateY(0) scale(1)}
+.toast-item.hide{opacity:0;transform:translateY(-6px) scale(.95);transition:opacity .2s ease,transform .2s ease}
+.toast-item:hover{transform:translateY(-1px) scale(1.01)}
+.toast-icon{flex-shrink:0;width:17px;height:17px;display:flex;align-items:center;justify-content:center;margin-top:1px;color:var(--toast-accent,var(--purple));font-size:14px}
+.toast-msg{flex:1}
+.toast-progress{position:absolute;left:0;bottom:0;height:2px;background:var(--toast-accent,var(--purple));opacity:.5;animation:toastShrink 3.4s linear forwards}
+@keyframes toastShrink{from{width:100%}to{width:0%}}
+.toast-action-btn{flex-shrink:0;margin:0 2px;padding:3px 10px;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:rgba(255,255,255,.12);color:inherit;font-size:11px;font-weight:600;cursor:pointer;transition:background .12s}
+.toast-action-btn:hover{background:rgba(255,255,255,.24)}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-title"><span class="logo-badge"><i class="ti ti-movie"></i></span>影片製作流程</div>
+  <div style="display:flex;align-items:center;gap:8px">
+    <input type="file" id="vf-import-file-input" accept="application/json,.json" style="display:none" onchange="vfImportDataFromFile(this)"/>
+    <div class="dark-toggle" onclick="document.getElementById('vf-import-file-input').click()" title="匯入備份檔（換瀏覽器／換裝置時用）"><i class="ti ti-upload"></i></div>
+    <div class="dark-toggle" onclick="vfExportData()" title="匯出備份檔（存下來，換瀏覽器／換裝置時可以匯入回來）"><i class="ti ti-download"></i></div>
+    <div class="dark-toggle" id="dark-toggle" onclick="toggleDarkMode()" title="切換深色模式"><i class="ti ti-moon"></i></div>
+  </div>
+</div>
+<div class="page-wrap">
+  <div id="videoflow-page"></div>
+</div>
+<div class="toast-stack" id="toast-stack"></div>
+<script>
+// ── 共用小工具（從原本大專案精簡搬過來） ──
+const uid = () => Math.random().toString(36).slice(2,9);
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function pad2(n){ return String(n).padStart(2,'0'); }
+function fmtDate(d){ return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`; }
+const isDataUrl = v => typeof v==='string' && v.indexOf('data:')===0;
+
+// 這個獨立版只在本機瀏覽器儲存資料，沒有雲端同步，所以這裡放一個空物件當佔位，
+// 讓沿用的程式碼（有些地方會檢查 window.cloudSync 存不存在）可以正常運作、不會報錯。
+window.cloudSync = null;
+// 同理，原本大專案裡有一個全域的 state（記錄目前在哪一頁），這裡只有一頁，固定寫死即可。
+let state = { view:'videoflow', selected:new Set() };
+
+// ── Toast 通知 ──
+const TOAST_TYPES = [
+  {match:'✅', icon:'ti-circle-check', color:'#3FAE6B'},
+  {match:'⚠️', icon:'ti-alert-triangle', color:'var(--gold)'},
+  {match:'❌', icon:'ti-circle-x', color:'#E0524F'},
+  {match:'☁️', icon:'ti-cloud', color:'var(--purple)'}
+];
+let _toastSeq = 0;
+function toast(msg, opts) {
+  const stack = document.getElementById('toast-stack');
+  if(!stack) return;
+  opts = opts || {};
+  const found = TOAST_TYPES.find(t => msg.startsWith(t.match));
+  const cleanMsg = found ? msg.slice(found.match.length).trim() : msg;
+  const id = 'toast-' + (++_toastSeq);
+  const hasAction = !!(opts.actionLabel && typeof opts.onAction === 'function');
+  const duration = hasAction ? 5000 : 3400;
+  const el = document.createElement('div');
+  el.className = 'toast-item';
+  el.id = id;
+  el.style.setProperty('--toast-accent', found ? found.color : 'var(--text3)');
+  el.innerHTML = `<span class="toast-icon"><i class="ti ${found ? found.icon : 'ti-bell'}"></i></span>`
+    + `<span class="toast-msg">${esc(cleanMsg)}</span>`
+    + (hasAction ? `<button type="button" class="toast-action-btn">${esc(opts.actionLabel)}</button>` : '')
+    + `<span class="toast-progress" style="animation-duration:${duration}ms"></span>`;
+  if(hasAction){
+    const btn = el.querySelector('.toast-action-btn');
+    btn.onclick = (e) => { e.stopPropagation(); try{ opts.onAction(); }catch(err){ console.error(err); } dismissToast(id); };
+  }
+  el.onclick = () => dismissToast(id);
+  stack.appendChild(el);
+  const items = stack.querySelectorAll('.toast-item');
+  if(items.length > 4) dismissToast(items[0].id);
+  requestAnimationFrame(() => el.classList.add('show'));
+  el._toastTimer = setTimeout(() => dismissToast(id), duration);
+}
+function dismissToast(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  clearTimeout(el._toastTimer);
+  el.classList.remove('show');
+  el.classList.add('hide');
+  setTimeout(() => { if(el.parentElement) el.parentElement.removeChild(el); }, 220);
+}
+
+// ── 圖片獨立儲存區（IndexedDB），封面圖用，避免塞爆 localStorage ──
+function idbOpenImageDB(){
+  return new Promise((resolve,reject)=>{
+    const req = indexedDB.open('videoflow_images', 1);
+    req.onupgradeneeded = ()=>{ if(!req.result.objectStoreNames.contains('images')) req.result.createObjectStore('images'); };
+    req.onsuccess = ()=>resolve(req.result);
+    req.onerror = ()=>reject(req.error);
+  });
+}
+async function idbPutImage(key, dataUrl){
+  const db = await idbOpenImageDB();
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction('images','readwrite');
+    tx.objectStore('images').put(dataUrl, key);
+    tx.oncomplete=()=>resolve(); tx.onerror=()=>reject(tx.error);
+  });
+}
+async function idbGetImage(key){
+  const db = await idbOpenImageDB();
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction('images','readonly');
+    const req = tx.objectStore('images').get(key);
+    req.onsuccess=()=>resolve(req.result||null); req.onerror=()=>reject(req.error);
+  });
+}
+async function idbDeleteImage(key){
+  const db = await idbOpenImageDB();
+  return new Promise((resolve,reject)=>{
+    const tx = db.transaction('images','readwrite');
+    tx.objectStore('images').delete(key);
+    tx.oncomplete=()=>resolve(); tx.onerror=()=>reject(tx.error);
+  });
+}
+const IDB_IMG_PREFIX = 'idbref:';
+const _cloudImgUploading = new Set();
+const _idbOffloadCache = new Map();
+
+// ── 開工具連結：優先開一個貼齊右側的小視窗，失敗就開新分頁 ──
+function openToolSidePanel(url, name){
+  if(!url) return;
+  const w = 480;
+  const h = Math.min(900, (window.screen.availHeight||900) - 40);
+  const left = Math.max(0, (window.screen.availWidth||1280) - w - 12);
+  const top = 16;
+  let win = null;
+  try{ win = window.open(url, name||'_blank', `width=${w},height=${h},left=${left},top=${top},noopener`); }catch(e){}
+  if(!win){ win = window.open(url, '_blank', 'noopener'); }
+  if(win && win.focus) win.focus();
+}
+function toggleDarkMode(){
+  document.body.classList.toggle('dark-mode');
+  localStorage.setItem('vf_dark_mode', document.body.classList.contains('dark-mode') ? '1':'0');
+}
+if(localStorage.getItem('vf_dark_mode')==='1') document.body.classList.add('dark-mode');
+
+//  🎬 影片製作流程：把「找歌 → 寫詞 → Suno → 封面 → 剪片 → 上傳 → 優化文案」
+//  這條會用到一堆不同工具的產線，變成一個可以逐步點開操作、記錄每一步產出的清單。
+//  資料存在本機 localStorage，並會同步到雲端（跨裝置共用）。
+// ══════════════════════════════
+const VIDEO_STEPS = [
+  {key:'analyze',  emoji:'🔎', title:'分析拆解喜歡的歌曲', tool:'Gemini Gem',
+    desc:'把最近聽到覺得不錯的歌曲 YouTube 連結，丟進你寫好的 Gemini Gem，請它拆解曲風、編曲、情緒走向與結構，作為接下來寫提示詞的參考基礎。',
+    placeholder:'貼上這次參考的 YT 連結、以及 Gem 拆解出來的重點摘要…', defaultUrl:'https://gemini.google.com/'},
+  {key:'promptOpt', emoji:'✨', title:'優化 Suno 提示詞', tool:'ChatGPT',
+    desc:'把上一步拆解出來的重點丟給 ChatGPT，優化成一段可以直接拿去 Suno 用的 Style 提示詞。',
+    placeholder:'貼上優化後、準備拿去 Suno 用的提示詞…', defaultUrl:'https://chatgpt.com/'},
+  {key:'lyrics',   emoji:'✒️', title:'生成歌詞', tool:'ChatGPT',
+    desc:'',
+    placeholder:'貼上這次生成／挑選出來的歌詞內容…', defaultUrl:'https://chatgpt.com/'},
+  {key:'suno',     emoji:'🎵', title:'Suno 生成歌曲', tool:'Suno',
+    desc:'把提示詞跟歌詞丟進 Suno，反覆生成到有滿意的版本為止。挑到喜歡的版本記得存進「SUNO AI → 歌曲紀錄」，方便之後回來找。',
+    placeholder:'貼上最後選定的歌曲連結／版本備註…', defaultUrl:'https://suno.com/create'},
+  {key:'coverStyle', emoji:'🎨', title:'生成封面圖風格', tool:'Gemini',
+    desc:'',
+    placeholder:'貼上這次用的封面風格提示詞／圖片連結…', defaultUrl:'https://gemini.google.com/'},
+  {key:'coverTitle', emoji:'🖼️', title:'加上標題文字並優化', tool:'ChatGPT',
+    desc:'',
+    placeholder:'貼上這次用的標題文字／備註…', defaultUrl:'https://chatgpt.com/'},
+  {key:'canva',    emoji:'🎬', title:'製作短影片', tool:'Canva',
+    desc:'把歌曲、封面圖等素材整合進 Canva，剪出短影片的基本架構跟排版。',
+    placeholder:'記錄用的範本名稱、素材擺放方式等備註…', defaultUrl:'https://www.canva.com/'},
+  {key:'capcut',   emoji:'✂️', title:'加特效與字幕', tool:'CapCut',
+    desc:'進 CapCut 幫影片加上特效、轉場，並加上歌詞字幕文字。',
+    placeholder:'記錄這次用的特效／字幕樣式備註…', defaultUrl:'https://www.capcut.com/'},
+  {key:'upload',   emoji:'⬆️', title:'上傳 YouTube', tool:'YouTube Studio',
+    desc:'把完成的短影片上傳到 YouTube。',
+    placeholder:'貼上發布後的影片連結…', defaultUrl:'https://studio.youtube.com/'},
+  {key:'copy',     emoji:'📝', title:'修改文案與標題', tool:'ChatGPT',
+    desc:'請 ChatGPT 幫忙修改優化影片的文案敘述跟標題，讓曝光效果更好，上傳後也可以回來再調整。',
+    placeholder:'貼上最終定案的標題／文案…', defaultUrl:'https://chatgpt.com/'},
+];
+let videoProjects = [];
+// ── 影片封面圖片（p.steps.coverStyle.coverImage / coverImageShorts / coverImageSingle）：
+//    跟書籤／娛樂清單的縮圖一樣，上傳的圖片如果是 base64（data:...），要先搬到 IndexedDB、
+//    背景上傳雲端 Storage 換成一個網址，本機／雲端同步資料裡才只留一個短短的參照字串。
+//    這三個欄位是「巢狀」放在 p.steps.coverStyle 裡（不是專案物件最上層），
+//    所以不能直接沿用 offloadImagesForSave／restoreImagesAfterLoad（它們只認最上層欄位），
+//    這裡另外寫一組專門處理巢狀欄位的版本，行為邏輯完全對齊。
+const VF_COVER_FIELDS = ['coverImage','coverImageShorts','coverImageSingle'];
+function cloudUploadVfCoverIfNeeded(key, dataUrl, projectId, field){
+  if(!window.cloudSync || !window.cloudSync.uploadImage) return;
+  if(_cloudImgUploading.has(key)) return;
+  _cloudImgUploading.add(key);
+  window.cloudSync.uploadImage(key, dataUrl).then(url=>{
+    _cloudImgUploading.delete(key);
+    if(!url) return; // 離線或上傳失敗：圖片仍只保留在本機 IndexedDB，不影響使用
+    const p = videoProjects.find(x=>x.id===projectId);
+    if(p && p.steps && p.steps.coverStyle){
+      p.steps.coverStyle[field] = url; // 直接把記憶體中的圖片欄位換成雲端網址
+      try{ saveVideoProjectsLocal(); pushVideoFlowSync(); if(state.view==='videoflow') renderVideoFlowPage(); }catch(e){ console.error('影片封面上傳後重新存檔失敗', e); }
+    }
+  }).catch(e=>{
+    _cloudImgUploading.delete(key);
+    console.warn('影片封面雲端上傳失敗，僅保留本機', key, e);
+  });
+}
+function offloadVfCoverImages(list){
+  if(!Array.isArray(list) || !list.length) return list;
+  let changed = false;
+  const out = list.map(item=>{
+    if(!item || !item.steps || !item.steps.coverStyle) return item;
+    let csCopy = null;
+    VF_COVER_FIELDS.forEach(f=>{
+      const v = item.steps.coverStyle[f];
+      if(isDataUrl(v)){
+        const key = `videoflow_${item.id}_${f}`;
+        if(_idbOffloadCache.get(key) !== v){
+          idbPutImage(key, v).catch(e=>console.warn('影片封面存入 IndexedDB 失敗', e));
+          _idbOffloadCache.set(key, v);
+          cloudUploadVfCoverIfNeeded(key, v, item.id, f);
+        }
+        if(!csCopy) csCopy = {...item.steps.coverStyle};
+        csCopy[f] = IDB_IMG_PREFIX+key;
+        changed = true;
+      }
+    });
+    return csCopy ? {...item, steps:{...item.steps, coverStyle: csCopy}} : item;
+  });
+  return changed ? out : list;
+}
+function restoreVfCoverImages(list, onDone){
+  if(!Array.isArray(list) || !list.length) return;
+  const jobs = [];
+  list.forEach(item=>{
+    if(!item || !item.steps || !item.steps.coverStyle) return;
+    VF_COVER_FIELDS.forEach(f=>{
+      const v = item.steps.coverStyle[f];
+      if(typeof v==='string' && v.indexOf(IDB_IMG_PREFIX)===0){
+        const key = v.slice(IDB_IMG_PREFIX.length);
+        jobs.push(idbGetImage(key).then(dataUrl=>{ if(dataUrl) item.steps.coverStyle[f]=dataUrl; }).catch(()=>{}));
+      }
+    });
+  });
+  if(jobs.length) Promise.all(jobs).then(()=>{ try{ onDone && onDone(); }catch(e){} });
+}
+function loadVideoProjects(){
+  try{ videoProjects = JSON.parse(localStorage.getItem('lv_video_projects')) || []; }catch(e){ videoProjects = []; }
+  restoreVfCoverImages(videoProjects, ()=>{ try{ if(state.view==='videoflow') renderVideoFlowPage(); }catch(e){} });
+}
+function saveVideoProjectsLocal(){ localStorage.setItem('lv_video_projects', JSON.stringify(offloadVfCoverImages(videoProjects))); }
+function pushVideoFlowSync(){
+  if(!window.cloudSync) return;
+  return window.cloudSync.push('videoflow', { videoProjects: offloadVfCoverImages(videoProjects), vfLabel: loadVfLabel() });
+}
+function saveVideoProjects(){ saveVideoProjectsLocal(); pushVideoFlowSync(); }
+
+// ── 匯出／匯入備份檔：這個獨立版沒有雲端同步，資料只存在目前這個瀏覽器的 localStorage／IndexedDB，
+//    換一個瀏覽器或裝置就會看不到之前的資料，所以提供手動匯出一份 JSON 檔、之後可以在別的瀏覽器匯入回來 ──
+const VF_TEXT_PROMPT_KEYS = ['lv_video_analyze_prompt','lv_video_lyrics_prompt','lv_video_promptopt_prompt','lv_video_cover_prompt','lv_video_cover_shorts_prompt','lv_video_cover_single_prompt','lv_video_cover_title_prompt','lv_video_subtitle_prompt','lv_video_caption_prompt','lv_video_yttitle_prompt'];
+const VF_JSON_PROMPT_KEYS = ['lv_video_step_links','lv_video_step_titles'];
+async function vfResolvePendingCoverImages(){
+  // 封面圖片存進資料時會被換成 idbref: 開頭的參照字串（實際圖片在 IndexedDB），
+  // 匯出備份檔前要先把這些參照換回真正的圖片資料，備份檔在別的瀏覽器打開才看得到封面圖
+  const jobs = [];
+  videoProjects.forEach(item=>{
+    if(!item || !item.steps || !item.steps.coverStyle) return;
+    VF_COVER_FIELDS.forEach(f=>{
+      const v = item.steps.coverStyle[f];
+      if(typeof v==='string' && v.indexOf(IDB_IMG_PREFIX)===0){
+        const key = v.slice(IDB_IMG_PREFIX.length);
+        jobs.push(idbGetImage(key).then(dataUrl=>{ if(dataUrl) item.steps.coverStyle[f]=dataUrl; }).catch(()=>{}));
+      }
+    });
+  });
+  if(jobs.length) await Promise.all(jobs);
+}
+async function vfExportData(){
+  try{
+    toast('☁️ 準備備份檔中…');
+    await vfResolvePendingCoverImages();
+    const data = { app:'videoflow', version:1, exportedAt: Date.now(), vfLabel: loadVfLabel(), videoProjects, textPrompts:{}, jsonPrompts:{} };
+    VF_TEXT_PROMPT_KEYS.forEach(k=>{ const v = localStorage.getItem(k); if(v!==null) data.textPrompts[k]=v; });
+    VF_JSON_PROMPT_KEYS.forEach(k=>{ const v = localStorage.getItem(k); if(v!==null){ try{ data.jsonPrompts[k]=JSON.parse(v); }catch(e){} } });
+    const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = `videoflow-備份-${fmtDate(new Date())}.json`;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 2000);
+    toast('✅ 已匯出備份檔，請妥善保存，換瀏覽器／裝置時可以用它匯入回來');
+  }catch(e){
+    console.error('匯出失敗', e);
+    toast('❌ 匯出失敗，請再試一次');
+  }
+}
+function vfImportDataFromFile(input){
+  const file = input.files && input.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    let data;
+    try{ data = JSON.parse(reader.result); }catch(e){ toast('❌ 這不是有效的備份檔'); input.value=''; return; }
+    if(!data || data.app!=='videoflow' || !Array.isArray(data.videoProjects)){ toast('❌ 這不是有效的「影片製作流程」備份檔'); input.value=''; return; }
+    const n = data.videoProjects.length;
+    if(!confirm(`確定要匯入這份備份檔嗎？\n\n裡面有 ${n} 個影片專案，匯入後會「覆蓋」目前這個瀏覽器上的所有影片專案與自訂提示詞，此動作無法復原。`)){ input.value=''; return; }
+    videoProjects = data.videoProjects;
+    saveVideoProjects();
+    if(data.vfLabel) saveVfLabel(data.vfLabel);
+    if(data.textPrompts){ Object.keys(data.textPrompts).forEach(k=>{ if(data.textPrompts[k]!==undefined && data.textPrompts[k]!==null) localStorage.setItem(k, data.textPrompts[k]); }); }
+    if(data.jsonPrompts){ Object.keys(data.jsonPrompts).forEach(k=>{ try{ localStorage.setItem(k, JSON.stringify(data.jsonPrompts[k])); }catch(e){} }); }
+    vfState.selectedProjectId = null;
+    input.value = '';
+    renderVideoFlowNav();
+    renderVideoFlowPage();
+    toast(`✅ 已匯入 ${n} 個影片專案與自訂提示詞`);
+  };
+  reader.onerror = () => { toast('❌ 讀取備份檔失敗，請再試一次'); input.value=''; };
+  reader.readAsText(file);
+}
+
+// ── 分析步驟專用的固定提示詞模板：內容預設固定，但可編輯，編輯後全部專案共用同一份 ──
+const VF_ANALYZE_PROMPT_DEFAULT = `請幫我拆解分析這首歌曲，我要用來當作寫 Suno AI 提示詞的參考依據，請用條列的方式整理以下重點：
+1. 主曲風與次曲風（越具體越好，不要只寫「流行」這種籠統的詞）
+2. 節奏感／速度／律動特色
+3. 旋律線條與音階動態起伏（音高走向的上行／下行趨勢、音程跳動幅度、樂句如何鋪陳堆疊到高潮、主歌與副歌的旋律張力差異）
+4. 主要樂器編制與編曲手法
+5. 人聲特質（性別、音色、唱腔、情緒處理方式）
+6. 整體情緒與敘事氛圍
+7. 段落結構安排（主歌／副歌／橋段怎麼鋪陳轉折）
+8. 混音質感與年代感（例如復古／現代／乾淨／粗糙）
+請盡量用精確、具體、可以直接拿去當作曲風描述的詞彙來寫，我等等會拿這份拆解結果去優化 Suno 的提示詞。
+
+這是這次要分析的歌曲連結：`;
+// 最多 5 個提示詞版本，各自獨立保存內容與名稱，方便切換測試哪個效果比較好
+const VF_ANALYZE_PROMPT_VERSION_COUNT = 5;
+function vfDefaultAnalyzePromptVersions(){
+  const arr = [];
+  for(let i=0;i<VF_ANALYZE_PROMPT_VERSION_COUNT;i++){ arr.push({ name:'版本 '+(i+1), text: i===0 ? VF_ANALYZE_PROMPT_DEFAULT : '' }); }
+  return arr;
+}
+function loadVfAnalyzePromptVersions(){
+  try{
+    const raw = localStorage.getItem('lv_video_analyze_prompt_versions');
+    if(raw){
+      const arr = JSON.parse(raw);
+      if(Array.isArray(arr) && arr.length===VF_ANALYZE_PROMPT_VERSION_COUNT) return arr;
+    }
+  }catch(e){}
+  // 從舊版單一提示詞欄位搬過來，放進版本 1，其餘版本留空給使用者自己嘗試
+  const defaults = vfDefaultAnalyzePromptVersions();
+  const old = localStorage.getItem('lv_video_analyze_prompt');
+  if(old!==null && old!==undefined) defaults[0].text = old;
+  saveVfAnalyzePromptVersions(defaults);
+  return defaults;
+}
+function saveVfAnalyzePromptVersions(arr){ localStorage.setItem('lv_video_analyze_prompt_versions', JSON.stringify(arr)); }
+function loadVfAnalyzeActiveVersion(){
+  const v = parseInt(localStorage.getItem('lv_video_analyze_active_version'), 10);
+  return (isNaN(v) || v<0 || v>=VF_ANALYZE_PROMPT_VERSION_COUNT) ? 0 : v;
+}
+function saveVfAnalyzeActiveVersion(i){ localStorage.setItem('lv_video_analyze_active_version', String(i)); }
+function loadVfAnalyzePrompt(){
+  const versions = loadVfAnalyzePromptVersions();
+  const idx = loadVfAnalyzeActiveVersion();
+  return (versions[idx] && versions[idx].text) || '';
+}
+function vfSwitchAnalyzeVersion(idx){
+  saveVfAnalyzeActiveVersion(idx);
+  vfState.promptEditing = false;
+  renderVideoFlowPage();
+}
+function vfTogglePromptPreview(){ vfState.promptPreviewExpanded = !vfState.promptPreviewExpanded; renderVideoFlowPage(); }
+function vfTogglePromptEdit(){ vfState.promptEditing = true; renderVideoFlowPage(); }
+function vfCancelPromptEdit(){ vfState.promptEditing = false; renderVideoFlowPage(); }
+function vfSavePrompt(){
+  const textVal = document.getElementById('vf-analyze-prompt-edit')?.value;
+  const nameVal = document.getElementById('vf-analyze-prompt-name-edit')?.value;
+  const versions = loadVfAnalyzePromptVersions();
+  const idx = loadVfAnalyzeActiveVersion();
+  if(!versions[idx]) versions[idx] = { name:'版本 '+(idx+1), text:'' };
+  if(textVal!==undefined) versions[idx].text = textVal;
+  if(nameVal!==undefined && nameVal.trim()) versions[idx].name = nameVal.trim();
+  saveVfAnalyzePromptVersions(versions);
+  vfState.promptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已儲存「'+versions[idx].name+'」');
+}
+function vfResetAnalyzePrompt(){
+  const idx = loadVfAnalyzeActiveVersion();
+  if(!confirm('確定要把這個版本還原成預設內容嗎？你修改過的內容會被蓋掉。')) return;
+  const versions = loadVfAnalyzePromptVersions();
+  versions[idx] = vfDefaultAnalyzePromptVersions()[idx];
+  saveVfAnalyzePromptVersions(versions);
+  vfState.promptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已還原成預設提示詞');
+}
+// ── 歌詞步驟專用的固定提示詞（沿用 SUNO AI「歌詞創作」裡的固定寫詞規則），內容固定但可編輯 ──
+function loadVfLyricsPrompt(){
+  const s = localStorage.getItem('lv_video_lyrics_prompt');
+  return (s===null || s===undefined) ? SUNO_LYRIC_PROMPT_RULES : s;
+}
+function saveVfLyricsPrompt(value){ localStorage.setItem('lv_video_lyrics_prompt', value); }
+function vfToggleLyricsPromptPreview(){ vfState.lyricsPromptPreviewExpanded = !vfState.lyricsPromptPreviewExpanded; renderVideoFlowPage(); }
+function vfToggleLyricsPromptEdit(){ vfState.lyricsPromptEditing = true; renderVideoFlowPage(); }
+function vfCancelLyricsPromptEdit(){ vfState.lyricsPromptEditing = false; renderVideoFlowPage(); }
+function vfSaveLyricsPrompt(){
+  const val = document.getElementById('vf-lyrics-prompt-edit')?.value;
+  if(val!==undefined) saveVfLyricsPrompt(val);
+  vfState.lyricsPromptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已儲存歌詞提示詞');
+}
+function vfResetLyricsPrompt(){
+  if(!confirm('確定要把歌詞提示詞還原成預設內容嗎？你自己修改過的版本會被蓋掉。')) return;
+  localStorage.removeItem('lv_video_lyrics_prompt');
+  vfState.lyricsPromptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已還原成預設歌詞提示詞');
+}
+// ── 歌詞步驟專用的「使用者輸入欄位」：固定模板（帶填空），每個專案各自填寫自己這次的內容 ──
+const VF_LYRICS_USER_INPUT_TEMPLATE = `- 主題／情境：______
+- 篇幅需求（預設「標準單曲」，也可填「精簡短版」「抖音15秒版」「敘事長版」）：______
+- 人聲設定（例如：女聲、男聲、對唱）：______
+- 速度感（例如：慢板抒情、中板、快節奏）：______`;
+function vfGetLyricsUserInput(p){
+  const raw = p.steps.lyrics && p.steps.lyrics.userInput;
+  return (raw===undefined || raw===null) ? VF_LYRICS_USER_INPUT_TEMPLATE : raw;
+}
+function vfUpdateLyricsUserInput(projectId, value){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  if(!p.steps.lyrics) p.steps.lyrics = {note:'', done:false};
+  p.steps.lyrics.userInput = value;
+  saveVideoProjects();
+}
+function vfResetLyricsUserInput(projectId){
+  if(!confirm('確定要把使用者輸入欄位還原成預設模板嗎？這次填寫的內容會被清空。')) return;
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  if(!p.steps.lyrics) p.steps.lyrics = {note:'', done:false};
+  p.steps.lyrics.userInput = VF_LYRICS_USER_INPUT_TEMPLATE;
+  saveVideoProjects();
+  renderVideoFlowPage();
+  toast('✅ 已還原成預設模板');
+}
+// ── 歌詞步驟專用的「STYLE PROMPT」欄位：貼上「優化 Suno 提示詞」那步產出的曲風提示詞，
+//    讓 ChatGPT 寫詞時的語感、意象貼合這個曲風氛圍。可手動貼，也可一鍵從上一步帶入 ──
+function vfGetLyricsStylePrompt(p){
+  const raw = p.steps.lyrics && p.steps.lyrics.stylePrompt;
+  return (raw===undefined || raw===null) ? '' : raw;
+}
+function vfUpdateLyricsStylePrompt(projectId, value){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  if(!p.steps.lyrics) p.steps.lyrics = {note:'', done:false};
+  p.steps.lyrics.stylePrompt = value;
+  saveVideoProjects();
+}
+function vfClearLyricsStylePrompt(projectId){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  if(!p.steps.lyrics) return;
+  p.steps.lyrics.stylePrompt = '';
+  saveVideoProjects();
+  renderVideoFlowPage();
+  toast('✅ 已清除 STYLE PROMPT，可以貼下一首了');
+}
+function vfPullStylePromptFromPromptOpt(projectId){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  const source = ((p.steps.promptOpt && p.steps.promptOpt.note) || '').trim();
+  if(!source){ toast('⚠️ 上一步「優化 Suno 提示詞」還沒有貼上結果，先去那邊貼上再帶入'); return; }
+  if(!p.steps.lyrics) p.steps.lyrics = {note:'', done:false};
+  p.steps.lyrics.stylePrompt = source;
+  saveVideoProjects();
+  renderVideoFlowPage();
+  toast('✅ 已帶入上一步的 STYLE PROMPT');
+}
+function vfCopyLyricsPrompt(projectId){ vfCopyLyricsPromptTo(projectId, 'chatgpt'); }
+// ── 生成歌詞這步可以測試不同 AI 工具寫出來的歌詞哪個比較好，各自記各自的連結 ──
+const VF_LYRICS_TOOLS = [
+  {key:'chatgpt', label:'ChatGPT', defaultUrl:'https://chatgpt.com/'},
+  {key:'gemini',  label:'Gemini',  defaultUrl:'https://gemini.google.com/'},
+  {key:'claude',  label:'Claude',  defaultUrl:'https://claude.ai/new'},
+];
+function vfGetLyricsToolUrl(toolKey){
+  const links = loadVfStepLinks();
+  const t = VF_LYRICS_TOOLS.find(x=>x.key===toolKey);
+  return (links['lyrics__'+toolKey] || t?.defaultUrl || '').trim();
+}
+function vfEditLyricsToolLink(toolKey){
+  const t = VF_LYRICS_TOOLS.find(x=>x.key===toolKey); if(!t) return;
+  const cur = vfGetLyricsToolUrl(toolKey);
+  const val = prompt(`設定「生成歌詞」要開啟的 ${t.label} 連結（例如你自己的專屬 GPT／Gem 連結），設定一次之後，每個專案點這裡都會開這個網址：`, cur);
+  if(val===null) return;
+  const links = loadVfStepLinks();
+  links['lyrics__'+toolKey] = val.trim();
+  localStorage.setItem('lv_video_step_links', JSON.stringify(links));
+  renderVideoFlowPage();
+  toast('✅ 已更新 '+t.label+' 連結');
+}
+function vfOpenLyricsTool(toolKey){
+  const url = vfGetLyricsToolUrl(toolKey);
+  if(url) window.open(url, '_blank', 'noopener');
+  else toast('這個工具還沒設定連結，點旁邊的鉛筆圖示先設定一次');
+}
+function vfCopyLyricsPromptTo(projectId, toolKey){
+  const fixedText = loadVfLyricsPrompt();
+  let text = fixedText;
+  if(projectId){
+    const p = videoProjects.find(x=>x.id===projectId);
+    const stylePrompt = (p ? vfGetLyricsStylePrompt(p) : '').trim();
+    const userInput = (p ? vfGetLyricsUserInput(p) : '').trim();
+    const parts = [fixedText];
+    if(stylePrompt) parts.push('以下是這首歌的 STYLE PROMPT，請讓歌詞的語感、意象、節奏貼合這個曲風氛圍：\n' + stylePrompt);
+    if(userInput) parts.push('以下是這次歌詞想要的意境／設定，請依此發展故事線與情感，不要偏離：\n' + userInput);
+    text = parts.join('\n\n');
+  }
+  const t = VF_LYRICS_TOOLS.find(x=>x.key===toolKey);
+  const label = t ? t.label : '工具';
+  const goOpen = () => vfOpenLyricsTool(toolKey);
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>{ toast('✅ 已複製歌詞提示詞，到 '+label+' 貼上'); goOpen(); }).catch(goOpen);
+  } else { goOpen(); }
+}
+// ── 優化 Suno 提示詞步驟專用的固定提示詞（把拆解重點交給 ChatGPT，優化成 Suno 用的 Style 提示詞），內容固定但可編輯 ──
+const VF_PROMPT_OPT_PROMPT_DEFAULT = `請你擔任專業音樂製作人與 Suno AI Prompt 工程師，幫我優化以下歌曲生成提示詞。
+請保留原始歌曲的核心情緒、故事氛圍、曲風方向、人聲特色、主要樂器、編曲層次與製作質感，不要改變創作意圖。
+請將內容重新整理成適合 Suno AI 判讀的高品質音樂生成 Prompt，刪除過度技術化、重複或 Suno 難以理解的描述，避免像混音工程文件，而改寫成 AI 容易識別的音樂語言。
+優化時請遵循以下結構：
+
+1. Mood & Genre
+2. Tempo & Atmosphere
+3. Instrumentation & Arrangement
+4. Vocal Style
+5. Production Quality
+6. Negative Prompt
+7. Melody Contour & Pitch Dynamics（旋律線條與音階動態起伏：音高走向的上行／下行趨勢、音程跳動幅度、樂句如何鋪陳堆疊到高潮、主歌與副歌的旋律張力差異）
+
+請控制在 1000 字以內（包含英文與空白），使用英文音樂製作術語為主，讓 Suno AI 更容易理解。
+請避免加入歌手姓名、版權作品名稱或過度精確但無助於生成品質的參數。
+最後輸出：
+① Suno 最佳化 Prompt（1000 字以內）
+② 1000 字內 Style Prompt（適合填入 Style 欄位，不需要英文的術語）
+
+以下是原始提示詞：`;
+function loadVfPromptOptPrompt(){
+  const s = localStorage.getItem('lv_video_promptopt_prompt');
+  return (s===null || s===undefined) ? VF_PROMPT_OPT_PROMPT_DEFAULT : s;
+}
+function saveVfPromptOptPrompt(value){ localStorage.setItem('lv_video_promptopt_prompt', value); }
+function vfTogglePromptOptPromptPreview(){ vfState.promptOptPromptPreviewExpanded = !vfState.promptOptPromptPreviewExpanded; renderVideoFlowPage(); }
+function vfTogglePromptOptPromptEdit(){ vfState.promptOptPromptEditing = true; renderVideoFlowPage(); }
+function vfCancelPromptOptPromptEdit(){ vfState.promptOptPromptEditing = false; renderVideoFlowPage(); }
+function vfSavePromptOptPrompt(){
+  const val = document.getElementById('vf-promptopt-prompt-edit')?.value;
+  if(val!==undefined) saveVfPromptOptPrompt(val);
+  vfState.promptOptPromptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已儲存優化提示詞');
+}
+function vfResetPromptOptPrompt(){
+  if(!confirm('確定要把優化提示詞還原成預設內容嗎？你自己修改過的版本會被蓋掉。')) return;
+  localStorage.removeItem('lv_video_promptopt_prompt');
+  vfState.promptOptPromptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已還原成預設優化提示詞');
+}
+function vfCopyPromptOptPrompt(projectId){
+  const promptText = loadVfPromptOptPrompt();
+  let bundle = promptText;
+  if(projectId){
+    const p = videoProjects.find(x=>x.id===projectId);
+    const st = p?.steps?.promptOpt;
+    const summary = ((st && st.analyzeSummary!==undefined && st.analyzeSummary!==null && st.analyzeSummary!=='') ? st.analyzeSummary : (p?.steps?.analyze?.note || '')).trim();
+    bundle = promptText + (summary ? summary : '（尚未貼上分析結果摘要）');
+  }
+  const goOpen = () => vfOpenTool('promptOpt');
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(bundle).then(()=>{ toast(projectId ? '✅ 已複製提示詞＋分析摘要，到 ChatGPT 貼上' : '✅ 已複製優化提示詞，到 ChatGPT 貼上'); goOpen(); }).catch(goOpen);
+  } else { goOpen(); }
+}
+function vfUpdateAnalyzeSummary(projectId, value){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  if(!p.steps.promptOpt) p.steps.promptOpt = {note:'', done:false};
+  p.steps.promptOpt.analyzeSummary = value;
+  saveVideoProjects();
+}
+function vfClearAnalyzeSummary(projectId){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  if(!p.steps.promptOpt) p.steps.promptOpt = {note:'', done:false};
+  p.steps.promptOpt.analyzeSummary = '';
+  if(p.steps.analyze) p.steps.analyze.note = ''; // 舊資料的備援欄位也一併清掉，避免清除後又被舊資料補回來
+  saveVideoProjects();
+  renderVideoFlowPage();
+  toast('✅ 已清除分析摘要，可以開始做下一首了');
+}
+// ── 修改文案與標題步驟專用的固定提示詞（產生 YouTube 音樂發布介紹文案），內容固定但可編輯 ──
+const VF_CAPTION_PROMPT_DEFAULT = `你是一位專業音樂文案創作者。
+請根據我提供的新歌曲名稱、歌詞內容與歌曲感覺，創作一篇新的 YouTube 音樂發布介紹文案。
+請沿用以下範例的：
+
+* 情緒氛圍
+* 敘事節奏
+* 溫暖陪伴感
+* 深夜音樂故事感
+* 排版格式
+
+但不要複製原句，請為新歌曲創造新的故事。
+
+【固定參考範例】
+🎧 今年的深夜，你還記得那顆星嗎？🌌
+看著無際的夜空，心裡是不是總藏著一個沒能實現的願望，或是一個已經不在身邊的人？
+❤️ 《星空的願望》EP.06 已經上線！
+這首歌獻給所有在孤單的夜裡，依然渴望奔向回憶的你。
+禮拜五將會釋出完整版，
+就來聽聽看這首夏日限定單曲吧。
+#星空的願望 #夏日限定 #情感音樂 #2026必聽 #音樂創作 #HealingMusic
+
+【創作要求】
+請保持：
+
+* 第一段：用一個畫面或問題帶出情緒，引起聽眾共鳴
+* 第二段：介紹歌曲上線、歌曲想獻給的人、歌曲核心情感
+* 第三段：邀請聽眾聆聽，營造陪伴感
+* 最後加入適合歌曲的 Hashtag 風格：溫柔、感性、有電影感、適合 AI 音樂頻道。
+
+【本次歌曲資料】
+歌曲名稱：「」
+EP編號：「」
+歌詞：「」
+歌曲風格／主題：「」`;
+function loadVfCaptionPrompt(){
+  const s = localStorage.getItem('lv_video_caption_prompt');
+  return (s===null || s===undefined) ? VF_CAPTION_PROMPT_DEFAULT : s;
+}
+function saveVfCaptionPrompt(value){ localStorage.setItem('lv_video_caption_prompt', value); }
+function vfToggleCaptionPromptPreview(){ vfState.captionPromptPreviewExpanded = !vfState.captionPromptPreviewExpanded; renderVideoFlowPage(); }
+function vfToggleCaptionPromptEdit(){ vfState.captionPromptEditing = true; renderVideoFlowPage(); }
+function vfCancelCaptionPromptEdit(){ vfState.captionPromptEditing = false; renderVideoFlowPage(); }
+function vfSaveCaptionPrompt(){
+  const val = document.getElementById('vf-caption-prompt-edit')?.value;
+  if(val!==undefined) saveVfCaptionPrompt(val);
+  vfState.captionPromptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已儲存文案提示詞');
+}
+function vfResetCaptionPrompt(){
+  if(!confirm('確定要把文案提示詞還原成預設內容嗎？你自己修改過的版本會被蓋掉。')) return;
+  localStorage.removeItem('lv_video_caption_prompt');
+  vfState.captionPromptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已還原成預設文案提示詞');
+}
+function vfCopyCaptionPrompt(){
+  const text = loadVfCaptionPrompt();
+  const goOpen = () => vfOpenTool('copy');
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>{ toast('✅ 已複製文案提示詞，到 ChatGPT 貼上'); goOpen(); }).catch(goOpen);
+  } else { goOpen(); }
+}
+function vfSetCopyTab(tab){ vfState.copyTab = tab; renderVideoFlowPage(); }
+// ── 修改文案與標題步驟：標題子頁籤專用的固定提示詞（產生同系列感的 YouTube 標題 10 個版本），內容固定但可編輯 ──
+const VF_YT_TITLE_PROMPT_DEFAULT = `請擔任專業音樂品牌企劃與 YouTube 音樂頻道編輯。
+請參考以下既有歌曲影片標題的風格、格式與情感定位，幫我的新歌曲製作同系列感的 YouTube 標題。
+
+參考範例：
+【🎧 EP.06首發】《星空的願望》我一直都在等你…｜獻給一直等待的人 ✨Official Lyric Video
+
+請保留此標題的核心特色：
+
+* EP 系列發布格式
+* 歌名使用《》標示
+* 前半段營造歌曲故事與情緒
+* 使用一句具有共鳴感的短句吸引觀眾
+* 使用「獻給……的人」建立情感連結
+* 保留 Official Lyric Video 的正式音樂發布感
+* 整體風格要溫暖、深情、電影感、具有故事性
+
+請根據以下新歌曲資訊，創作 10 個不同版本：
+歌曲名稱：
+【輸入新歌名】
+歌曲情緒與故事：
+【描述歌曲感覺，例如：失去、等待、重逢、遺憾、治癒、暗戀、思念、希望】
+音樂風格：
+【輸入曲風，例如：泰式流行、都市抒情、R&B、電影感情歌】
+
+請輸出：
+① 10 個 YouTube 標題版本
+② 最推薦前三名
+③ 最符合 EP 系列品牌風格的最終標題
+
+請避免：
+
+* 過度浮誇的點擊標題
+* 廣告感太重
+* 失去歌曲情緒的關鍵字堆疊`;
+function loadVfYtTitlePrompt(){
+  const s = localStorage.getItem('lv_video_yttitle_prompt');
+  return (s===null || s===undefined) ? VF_YT_TITLE_PROMPT_DEFAULT : s;
+}
+function saveVfYtTitlePrompt(value){ localStorage.setItem('lv_video_yttitle_prompt', value); }
+function vfToggleYtTitlePromptPreview(){ vfState.ytTitlePromptPreviewExpanded = !vfState.ytTitlePromptPreviewExpanded; renderVideoFlowPage(); }
+function vfToggleYtTitlePromptEdit(){ vfState.ytTitlePromptEditing = true; renderVideoFlowPage(); }
+function vfCancelYtTitlePromptEdit(){ vfState.ytTitlePromptEditing = false; renderVideoFlowPage(); }
+function vfSaveYtTitlePrompt(){
+  const val = document.getElementById('vf-yttitle-prompt-edit')?.value;
+  if(val!==undefined) saveVfYtTitlePrompt(val);
+  vfState.ytTitlePromptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已儲存標題提示詞');
+}
+function vfResetYtTitlePrompt(){
+  if(!confirm('確定要把標題提示詞還原成預設內容嗎？你自己修改過的版本會被蓋掉。')) return;
+  localStorage.removeItem('lv_video_yttitle_prompt');
+  vfState.ytTitlePromptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已還原成預設標題提示詞');
+}
+function vfCopyYtTitlePrompt(){
+  const text = loadVfYtTitlePrompt();
+  const goOpen = () => vfOpenTool('copy');
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>{ toast('✅ 已複製標題提示詞，到 ChatGPT 貼上'); goOpen(); }).catch(goOpen);
+  } else { goOpen(); }
+}
+// ── 封面圖風格步驟專用的固定提示詞（動漫風格插畫規則，貼去 Gemini 用），內容固定但可編輯 ──
+const VF_COVER_STYLE_PROMPT_DEFAULT = `請參考我提供的圖片。
+
+請不要直接複製圖片中的人物、背景、服裝、構圖或任何元素。
+
+請僅參考圖片的整體美術風格、角色設計、人物比例、光影、上色方式、細節表現與完成度。
+
+────────────────────
+【Art Style】
+────────────────────
+
+• Anime Illustration
+• Japanese Commercial Illustration
+• Modern Anime Artwork
+• Cinematic Illustration
+• Beautiful Digital Painting
+• Soft Painterly Rendering
+• Elegant Illustration
+• Professional Artwork
+• High-end Commercial Illustration
+• Rich artistic details
+
+────────────────────
+【Character Style】
+────────────────────
+
+Create a highly adorable anime character with a youthful appearance.
+
+Face:
+• Soft rounded face
+• Full soft cheeks
+• Short facial proportions
+• Slightly rounded jawline
+• Small and gently tapered chin (avoid sharp V-shaped chin)
+• Small delicate nose
+• Tiny natural mouth
+• Smooth facial contour
+• Baby-face appearance
+
+Eyes:
+• Very large expressive anime eyes
+• Round eye shape
+• Bright detailed irises
+• Sparkling highlights
+• Long soft eyelashes
+• Warm and gentle gaze
+• Cute innocent expression
+
+Hair:
+• Soft fluffy hair
+• Natural layered hair
+• Smooth flowing strands
+• Fine hair details
+• Soft volume
+
+Expression:
+• Gentle smile
+• Warm expression
+• Innocent expression
+• Healing atmosphere
+• Friendly appearance
+• Natural emotions
+
+────────────────────
+【Body Proportions】
+────────────────────
+
+• Petite body
+• Youthful body proportions
+• Slightly oversized head
+• Approximately 5–5.5 heads tall
+• Small shoulders
+• Narrow frame
+• Slim but soft body shape
+• Short neck
+• Delicate hands
+• Shorter limbs with natural proportions
+• Cute balanced proportions
+
+The body must naturally match the youthful face.
+
+Avoid mature, sexy or overly realistic body proportions.
+
+────────────────────
+【Lighting】
+────────────────────
+
+• Soft natural lighting
+• Cinematic lighting
+• Warm atmospheric lighting
+• Soft glow
+• Volumetric lighting
+• Beautiful shadows
+• High-quality rendering
+
+────────────────────
+【Color】
+────────────────────
+
+• Soft harmonious colors
+• Rich but balanced color palette
+• Smooth gradients
+• Elegant color harmony
+• Comfortable saturation
+• Natural skin tones
+
+────────────────────
+【Rendering】
+────────────────────
+
+• Extremely high detail
+• Clean line art
+• Soft painterly shading
+• Professional anime rendering
+• Rich textures
+• Beautiful highlights
+• Delicate shadow transitions
+• Premium illustration quality
+
+────────────────────
+【Image Quality】
+────────────────────
+
+masterpiece
+
+best quality
+
+ultra detailed
+
+professional artwork
+
+high resolution
+
+8K
+
+clean composition
+
+beautiful lighting
+
+cinematic
+
+highly detailed illustration
+
+premium anime illustration
+
+────────────────────
+【Important】
+────────────────────
+
+Maintain the same level of artistic quality, rendering style, character design language, facial proportions, body proportions, lighting quality, and overall illustration finish as the reference image.
+
+Only use the reference image as a STYLE REFERENCE.
+
+Do NOT copy the original composition, background, character, clothing, pose, colors, or objects.
+
+Generate a completely new illustration based on the following request.
+
+────────────────────
+【Negative Prompt】
+────────────────────
+
+low quality
+
+blurry
+
+bad anatomy
+
+deformed face
+
+long face
+
+sharp V-shaped chin
+
+pointed chin
+
+large nose
+
+realistic face
+
+mature face
+
+adult body
+
+overly sexy body
+
+wide shoulders
+
+long neck
+
+long legs
+
+tiny head
+
+small eyes
+
+cross-eyed
+
+asymmetrical eyes
+
+extra fingers
+
+missing fingers
+
+deformed hands
+
+poor proportions
+
+3D render
+
+photorealistic
+
+text
+
+watermark
+
+logo
+
+────────────────────
+【本次需求】
+────────────────────
+（這裡填寫你每次新的場景、人物動作、服裝、背景等）`;
+function loadVfCoverPrompt(){
+  const s = localStorage.getItem('lv_video_cover_prompt');
+  return (s===null || s===undefined) ? VF_COVER_STYLE_PROMPT_DEFAULT : s;
+}
+function saveVfCoverPrompt(value){ localStorage.setItem('lv_video_cover_prompt', value); }
+function vfToggleCoverPromptPreview(){ vfState.coverPromptPreviewExpanded = !vfState.coverPromptPreviewExpanded; renderVideoFlowPage(); }
+function vfToggleCoverPromptEdit(){ vfState.coverPromptEditing = true; renderVideoFlowPage(); }
+function vfCancelCoverPromptEdit(){ vfState.coverPromptEditing = false; renderVideoFlowPage(); }
+function vfSaveCoverPrompt(){
+  const val = document.getElementById('vf-cover-prompt-edit')?.value;
+  if(val!==undefined) saveVfCoverPrompt(val);
+  vfState.coverPromptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已儲存封面提示詞');
+}
+function vfResetCoverPrompt(){
+  if(!confirm('確定要把封面提示詞還原成預設內容嗎？你自己修改過的版本會被蓋掉。')) return;
+  localStorage.removeItem('lv_video_cover_prompt');
+  vfState.coverPromptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已還原成預設封面提示詞');
+}
+function vfCopyCoverPrompt(){
+  const text = loadVfCoverPrompt();
+  const goOpen = () => vfOpenTool('coverStyle');
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>{ toast('✅ 已複製封面提示詞，到 Gemini 貼上'); goOpen(); }).catch(goOpen);
+  } else { goOpen(); }
+}
+// ── 封面圖風格：YT Shorts 封面版（9:16 直式），跟上面的 YT 影片封面版分開存、可各自編輯 ──
+const VF_COVER_SHORTS_PROMPT_DEFAULT = `請參考我提供的圖片。
+
+請只參考：
+
+• 畫風
+• 筆觸
+• 上色方式
+• 光影
+• 人物比例
+• 臉型比例
+• 耳機設計
+• 可愛療癒風格
+• 整體美術品質
+
+不要參考：
+
+• 人物
+• 姿勢
+• 表情
+• 髮型
+• 服裝
+• 背景
+• 場景
+• 構圖內容
+• 配色
+• Logo
+• 文字
+• 所有具體物件
+
+生成比例要求：
+
+• 人物約占整張畫面 50%
+• 頭部約占整張畫面 30%
+• 身體約占整張畫面 20%
+
+────────────────────────
+
+【STYLE】
+
+Pure 2D anime illustration
+
+Japanese anime illustration
+
+Pixiv illustration style
+
+Cute fantasy illustration
+
+Official anime illustration
+
+Anime key visual
+
+Cute mascot illustration
+
+Flat anime illustration
+
+Clean anime line art
+
+Soft cel shading
+
+Hand-painted anime artwork
+
+Cute healing illustration
+
+Bright fantasy illustration
+
+No 3D
+
+No game CG
+
+No semi-realistic rendering
+
+No realistic textures
+
+────────────────────────
+
+【CHARACTER】
+
+Cute anime mascot character
+
+Cute healing mascot design
+
+Round baby-face
+
+Soft round cheeks
+
+Rounded jawline
+
+No sharp chin
+
+No pointed face
+
+No mature facial structure
+
+Tiny nose
+
+Tiny mouth
+
+Large sparkling anime eyes
+
+Glossy expressive eyes
+
+Cute natural gentle expression
+
+Soft fluffy short hair
+
+Large head with cute mascot proportions
+
+Small compact body
+
+Short body proportion
+
+Short torso
+
+Small rounded shoulders
+
+Rounded silhouette
+
+Cute oversized hoodie
+
+The character should look like a cute anime mascot, not a realistic human.
+
+Always wearing rounded over-ear headphones.
+
+Headphones are the character's signature feature.
+
+Keep the headphone design consistent.
+
+The headphones must always remain clearly visible.
+
+────────────────────────
+
+【CHARACTER PROPORTION】
+
+Cute chibi-inspired anime proportion
+
+Head slightly larger than body
+
+Large cute head
+
+Small short body
+
+Soft rounded body shape
+
+Avoid realistic human body proportions
+
+Avoid long torso
+
+Avoid long arms
+
+Avoid slim adult body shape
+
+The character should feel soft, warm and adorable.
+
+────────────────────────
+
+【LIGHTING】
+
+Bright anime lighting
+
+Warm indoor cafe lighting
+
+Soft glow
+
+Dreamy glow
+
+Beautiful bloom
+
+Sparkling particles
+
+Magical atmosphere
+
+Bright highlights
+
+Soft rim light
+
+Gentle warm light reflecting on the character
+
+────────────────────────
+
+【COLOR】
+
+Bright colors
+
+High saturation
+
+Rich vibrant colors
+
+Pastel fantasy palette
+
+Purple-blue fantasy colors
+
+Warm cafe tones
+
+Clean colors
+
+Rich gradients
+
+Luminous colors
+
+Soft atmospheric colors
+
+────────────────────────
+
+【CAMERA】
+
+Close-up character portrait
+
+Medium close-up composition
+
+Head slightly closer to the camera
+
+Face is the main visual focus
+
+Face occupies approximately 30% of the image
+
+Character occupies approximately 50% of the image
+
+Show head, shoulders and short upper body
+
+Crop around chest area
+
+No waist visible
+
+No hips visible
+
+No legs visible
+
+Short compact body only
+
+The camera should feel close but still preserve the environment.
+
+The character should not fill the entire frame.
+
+Maintain a cinematic anime scene feeling.
+
+Optimize for mobile viewing.
+
+────────────────────────
+
+【COMPOSITION】
+
+Portrait 9:16
+
+Designed for YouTube Shorts Cover
+
+Character positioned slightly below center.
+
+Leave natural visual space above the character for title placement.
+
+The upper area should naturally contain the cafe window, rainy atmosphere and warm lighting.
+
+Do not create empty blank space.
+
+Do not create a plain color block.
+
+Do not create a separated background area.
+
+Background should naturally continue from the scene.
+
+The character should be integrated into the environment.
+
+The thumbnail should immediately attract attention.
+
+The composition should feel like a beautiful anime movie scene.
+
+────────────────────────
+
+【SCENE】
+
+A cute anime girl sitting beside a cafe window.
+
+Rain falling outside the window.
+
+Warm yellow indoor lighting.
+
+The girl is wearing headphones and quietly listening to music.
+
+A peaceful relaxing moment.
+
+Healing atmosphere.
+
+Warm, cozy and emotional mood.
+
+Soft reflections from rain on the window.
+
+A calm cafe environment.
+
+────────────────────────
+
+【QUALITY】
+
+masterpiece
+
+best quality
+
+highest quality
+
+ultra detailed
+
+high resolution
+
+beautiful composition
+
+anime masterpiece
+
+clean artwork
+
+official anime illustration
+
+pixiv quality
+
+premium illustration
+
+commercial illustration quality
+
+────────────────────────
+
+請保持與參考圖一致：
+
+✓ 畫風  
+✓ 人物比例  
+✓ 臉型比例  
+✓ 可愛程度  
+✓ 光影  
+✓ 上色方式  
+✓ 發光效果  
+✓ 筆觸  
+✓ 色彩飽和度  
+✓ 商業插畫品質  
+✓ 整體療癒氛圍  
+✓ 耳機設計  
+
+────────────────────────
+
+IMPORTANT
+
+Use the reference image ONLY for:
+
+art style,
+rendering quality,
+painting technique,
+lighting,
+brushwork,
+character proportions,
+mascot design language,
+overall visual aesthetics.
+
+Do NOT copy:
+
+character identity,
+pose,
+hairstyle,
+clothing,
+background,
+scene,
+composition,
+colors,
+text,
+logo,
+or any specific objects.
+
+Create a completely new original illustration.
+
+The final artwork must look like a hand-drawn 2D anime illustration.
+
+Do NOT generate:
+
+3D render
+
+game CG
+
+semi-realistic illustration
+
+realistic human portrait
+
+Keep the artwork bright, colorful, soft, cute and highly saturated.
+
+The character should be immediately recognizable as a YouTube Shorts thumbnail.
+
+The face should be large, round, expressive and adorable.
+
+The body should remain short and compact.
+
+The background should naturally continue above the character without creating empty space.────────────────────────
+
+【以下是這次要生成的內容】
+
+請依照以上設定生成全新的原創插畫。`;
+function loadVfCoverShortsPrompt(){
+  const s = localStorage.getItem('lv_video_cover_shorts_prompt');
+  return (s===null || s===undefined) ? VF_COVER_SHORTS_PROMPT_DEFAULT : s;
+}
+function saveVfCoverShortsPrompt(value){ localStorage.setItem('lv_video_cover_shorts_prompt', value); }
+function vfToggleCoverShortsPromptPreview(){ vfState.coverShortsPromptPreviewExpanded = !vfState.coverShortsPromptPreviewExpanded; renderVideoFlowPage(); }
+function vfToggleCoverShortsPromptEdit(){ vfState.coverShortsPromptEditing = true; renderVideoFlowPage(); }
+function vfCancelCoverShortsPromptEdit(){ vfState.coverShortsPromptEditing = false; renderVideoFlowPage(); }
+function vfSaveCoverShortsPrompt(){
+  const val = document.getElementById('vf-cover-shorts-prompt-edit')?.value;
+  if(val!==undefined) saveVfCoverShortsPrompt(val);
+  vfState.coverShortsPromptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已儲存 Shorts 封面提示詞');
+}
+function vfResetCoverShortsPrompt(){
+  if(!confirm('確定要把 Shorts 封面提示詞還原成預設內容嗎？你自己修改過的版本會被蓋掉。')) return;
+  localStorage.removeItem('lv_video_cover_shorts_prompt');
+  vfState.coverShortsPromptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已還原成預設 Shorts 封面提示詞');
+}
+function vfCopyCoverShortsPrompt(){
+  const text = loadVfCoverShortsPrompt();
+  const goOpen = () => vfOpenTool('coverStyle');
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>{ toast('✅ 已複製 Shorts 封面提示詞，到 Gemini 貼上'); goOpen(); }).catch(goOpen);
+  } else { goOpen(); }
+}
+function vfSetCoverPromptTab(tab){ vfState.coverPromptTab = tab; renderVideoFlowPage(); }
+// ── 封面圖風格：YT 單曲封面版（音樂單曲/歌曲封面，跟影片封面版分開存、可各自編輯，預設內容比照 YT 影片封面版）──
+function loadVfCoverSinglePrompt(){
+  const s = localStorage.getItem('lv_video_cover_single_prompt');
+  return (s===null || s===undefined) ? VF_COVER_STYLE_PROMPT_DEFAULT : s;
+}
+function saveVfCoverSinglePrompt(value){ localStorage.setItem('lv_video_cover_single_prompt', value); }
+function vfToggleCoverSinglePromptPreview(){ vfState.coverSinglePromptPreviewExpanded = !vfState.coverSinglePromptPreviewExpanded; renderVideoFlowPage(); }
+function vfToggleCoverSinglePromptEdit(){ vfState.coverSinglePromptEditing = true; renderVideoFlowPage(); }
+function vfCancelCoverSinglePromptEdit(){ vfState.coverSinglePromptEditing = false; renderVideoFlowPage(); }
+function vfSaveCoverSinglePrompt(){
+  const val = document.getElementById('vf-cover-single-prompt-edit')?.value;
+  if(val!==undefined) saveVfCoverSinglePrompt(val);
+  vfState.coverSinglePromptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已儲存單曲封面提示詞');
+}
+function vfResetCoverSinglePrompt(){
+  if(!confirm('確定要把單曲封面提示詞還原成預設內容嗎？你自己修改過的版本會被蓋掉。')) return;
+  localStorage.removeItem('lv_video_cover_single_prompt');
+  vfState.coverSinglePromptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已還原成預設單曲封面提示詞');
+}
+function vfCopyCoverSinglePrompt(){
+  const text = loadVfCoverSinglePrompt();
+  const goOpen = () => vfOpenTool('coverStyle');
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>{ toast('✅ 已複製單曲封面提示詞，到 Gemini 貼上'); goOpen(); }).catch(goOpen);
+  } else { goOpen(); }
+}
+// ── 封面縮圖上傳／貼網址：三個分頁（影片／Shorts／單曲）各自獨立一組縮圖，用 field 區分存放欄位 ──
+function vfCoverUploadHTML(p, st, field){
+  const img = st[field];
+  const uid = p.id + '-' + field;
+  return `
+        <div class="form-group">
+          <label class="form-label">封面縮圖 <span class="cnt">上傳一張截圖，或直接貼上圖片網址，專案卡片上會直接顯示小縮圖，方便一眼認出是哪支影片</span></label>
+          <div class="vf-cover-upload">
+            ${img ? `<img src="${esc(img)}" class="vf-cover-thumb-lg" alt="" onerror="vfCoverImgError(this)"/>` : `<div class="vf-cover-thumb-lg" style="display:flex;align-items:center;justify-content:center;color:var(--text3)"><i class="ti ti-photo" style="font-size:22px"></i></div>`}
+            <div style="display:flex;flex-direction:column;gap:6px;flex:1;min-width:0">
+              <label class="btn-ghost" style="font-size:11px;padding:5px 9px;cursor:pointer;width:fit-content">
+                <i class="ti ti-upload" style="font-size:12px"></i> ${img?'更換縮圖':'上傳縮圖'}
+                <input type="file" accept="image/*" style="display:none" onchange="vfHandleCoverFile('${p.id}',this,'${field}')"/>
+              </label>
+              <div style="display:flex;gap:6px;align-items:center">
+                <input class="inp" style="flex:1;font-size:12px" id="vf-cover-url-${uid}" placeholder="或貼上圖片網址（https://…）" onkeydown="if(event.key==='Enter'){event.preventDefault();vfSetCoverImageFromUrl('${p.id}', this.value, '${field}')}"/>
+                <button type="button" class="icon-btn" onclick="vfSetCoverImageFromUrl('${p.id}', document.getElementById('vf-cover-url-${uid}').value, '${field}')" title="套用這個網址當封面縮圖"><i class="ti ti-check" style="font-size:13px"></i></button>
+              </div>
+              ${img ? `<button class="btn-ghost" style="font-size:11px;padding:5px 9px;width:fit-content" onclick="vfRemoveCoverImage('${p.id}','${field}')"><i class="ti ti-x" style="font-size:12px"></i> 移除縮圖</button>` : ''}
+            </div>
+          </div>
+        </div>`;
+}
+// ── 加特效與字幕步驟：額外的「字幕翻譯／繁體化」ChatGPT 固定提示詞，跟 CapCut 分頁切換 ──
+const VF_SUBTITLE_PROMPT_DEFAULT = `請幫我把以下歌詞處理成適合直接放進影片字幕的版本：
+1. 如果內容已經是中文，請統一轉換成繁體中文用字，並修正簡體字、錯字、標點
+2. 如果我有指定要翻譯的語言，請翻譯成該語言（例如：英文、日文、韓文），語氣自然、口語化，避免生硬的逐字直翻
+3. 保留原本的分行與段落結構，不要任意合併或拆開句子
+4. 每一行盡量精簡，符合字幕呈現的長度，不要太長
+5. 只需要輸出處理後的文字結果，不用加其他說明
+
+這次需要的語言／處理方式（例如：轉繁體中文 / 翻譯成英文 / 翻譯成日文）：
+
+
+這是我的歌詞內容：
+`;
+function loadVfSubtitlePrompt(){
+  const s = localStorage.getItem('lv_video_subtitle_prompt');
+  return (s===null || s===undefined) ? VF_SUBTITLE_PROMPT_DEFAULT : s;
+}
+function saveVfSubtitlePrompt(value){ localStorage.setItem('lv_video_subtitle_prompt', value); }
+function vfToggleSubtitlePromptPreview(){ vfState.subtitlePromptPreviewExpanded = !vfState.subtitlePromptPreviewExpanded; renderVideoFlowPage(); }
+function vfToggleSubtitlePromptEdit(){ vfState.subtitlePromptEditing = true; renderVideoFlowPage(); }
+function vfCancelSubtitlePromptEdit(){ vfState.subtitlePromptEditing = false; renderVideoFlowPage(); }
+function vfSaveSubtitlePrompt(){
+  const val = document.getElementById('vf-subtitle-prompt-edit')?.value;
+  if(val!==undefined) saveVfSubtitlePrompt(val);
+  vfState.subtitlePromptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已儲存字幕翻譯提示詞');
+}
+function vfResetSubtitlePrompt(){
+  if(!confirm('確定要把字幕翻譯提示詞還原成預設內容嗎？你自己修改過的版本會被蓋掉。')) return;
+  localStorage.removeItem('lv_video_subtitle_prompt');
+  vfState.subtitlePromptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已還原成預設字幕翻譯提示詞');
+}
+function vfCopySubtitlePrompt(){
+  const text = loadVfSubtitlePrompt();
+  const goOpen = () => window.open('https://chatgpt.com/', '_blank', 'noopener');
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>{ toast('✅ 已複製字幕翻譯提示詞，到 ChatGPT 貼上'); goOpen(); }).catch(goOpen);
+  } else { goOpen(); }
+}
+function vfSetCapcutTab(tab){ vfState.capcutTab = tab; renderVideoFlowPage(); }
+
+// ── 加上標題文字並優化步驟專用的固定提示詞（YouTube 縮圖標題設計，貼去 ChatGPT 用），內容固定但可編輯 ──
+const VF_COVER_TITLE_PROMPT_DEFAULT = `你是一位專業 YouTube AI 音樂頻道縮圖設計師。
+我會提供：
+1. 一張 AI 音樂封面圖片
+2. 一段指定的標題文字
+請不要修改我的標題內容，請將這段文字以最適合 YouTube 點擊率的方式融入圖片中。
+請優化：
+【文字設計】
+- 選擇符合 AI 音樂氛圍的高質感字體
+- 調整文字大小、位置、比例與層次
+- 強化標題視覺焦點
+- 加入適當描邊、陰影、光暈或透明背景
+- 確保手機觀看時文字依然清楚可讀
+【版面設計】
+- 根據圖片主體重新安排文字位置
+- 避免遮擋重要畫面元素
+- 保持視覺平衡與留白
+- 讓觀眾第一眼看到歌曲名稱與核心情緒
+【色彩與氛圍】
+- 強化圖片對比度
+- 調整亮度與色彩層次
+- 增加電影感、專輯封面質感
+- 保持 AI 音樂的夢幻、沉浸、高級感
+【YouTube 縮圖要求】
+- 適合 16:9 比例
+- 小尺寸觀看仍具有辨識度
+- 風格接近高質感音樂頻道縮圖
+- 不要加入多餘元素
+請直接使用我提供的標題文字完成最終 YouTube 封面設計。
+標題文字：
+「你的歌曲名稱」`;
+function loadVfCoverTitlePrompt(){
+  const s = localStorage.getItem('lv_video_cover_title_prompt');
+  return (s===null || s===undefined) ? VF_COVER_TITLE_PROMPT_DEFAULT : s;
+}
+function saveVfCoverTitlePrompt(value){ localStorage.setItem('lv_video_cover_title_prompt', value); }
+function vfToggleCoverTitlePromptPreview(){ vfState.titlePromptPreviewExpanded = !vfState.titlePromptPreviewExpanded; renderVideoFlowPage(); }
+function vfToggleCoverTitlePromptEdit(){ vfState.titlePromptEditing = true; renderVideoFlowPage(); }
+function vfCancelCoverTitlePromptEdit(){ vfState.titlePromptEditing = false; renderVideoFlowPage(); }
+function vfSaveCoverTitlePrompt(){
+  const val = document.getElementById('vf-title-prompt-edit')?.value;
+  if(val!==undefined) saveVfCoverTitlePrompt(val);
+  vfState.titlePromptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已儲存標題提示詞');
+}
+function vfResetCoverTitlePrompt(){
+  if(!confirm('確定要把標題提示詞還原成預設內容嗎？你自己修改過的版本會被蓋掉。')) return;
+  localStorage.removeItem('lv_video_cover_title_prompt');
+  vfState.titlePromptEditing = false;
+  renderVideoFlowPage();
+  toast('✅ 已還原成預設標題提示詞');
+}
+function vfCopyCoverTitlePrompt(){
+  const text = loadVfCoverTitlePrompt();
+  const goOpen = () => vfOpenTool('coverTitle');
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>{ toast('✅ 已複製標題提示詞，到 ChatGPT 貼上'); goOpen(); }).catch(goOpen);
+  } else { goOpen(); }
+}
+// 輸入當下就即時顯示/隱藏清除按鈕，不用等整頁重繪（避免打字打到一半游標跳掉）
+function vfToggleClearBtn(btnId, value){
+  const btn = document.getElementById(btnId);
+  if(btn) btn.style.display = value ? '' : 'none';
+}
+function vfUpdateSongLink(projectId, value){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  if(!p.steps.analyze) p.steps.analyze = {note:'', done:false};
+  p.steps.analyze.songLink = value;
+  saveVideoProjects();
+}
+function vfClearSongLink(projectId){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  if(!p.steps.analyze) return;
+  p.steps.analyze.songLink = '';
+  saveVideoProjects();
+  renderVideoFlowPage();
+  toast('✅ 已清除歌曲連結，可以貼下一首了');
+}
+function vfCopyAnalyzeBundle(projectId){
+  const p = videoProjects.find(x=>x.id===projectId);
+  const link = (p?.steps?.analyze?.songLink || '').trim();
+  const promptText = loadVfAnalyzePrompt();
+  const versions = loadVfAnalyzePromptVersions();
+  const activeIdx = loadVfAnalyzeActiveVersion();
+  const versionName = (versions[activeIdx] && versions[activeIdx].name) || ('版本 '+(activeIdx+1));
+  const bundle = promptText + (link ? link : '（尚未貼上歌曲連結）');
+  const goOpen = () => vfOpenTool('analyze');
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(bundle).then(()=>{ toast('✅ 已複製「'+versionName+'」提示詞＋歌曲連結，到 Gemini 貼上分析'); goOpen(); }).catch(goOpen);
+  } else { goOpen(); }
+}
+function loadVfStepLinks(){
+  try{ return JSON.parse(localStorage.getItem('lv_video_step_links')) || {}; }catch(e){ return {}; }
+}
+function vfGetStepUrl(key){
+  const links = loadVfStepLinks();
+  const step = VIDEO_STEPS.find(s=>s.key===key);
+  return (links[key] || step?.defaultUrl || '').trim();
+}
+function vfEditStepLink(key){
+  const step = VIDEO_STEPS.find(s=>s.key===key); if(!step) return;
+  const cur = vfGetStepUrl(key);
+  const val = prompt(`設定「${vfGetStepTitle(key)}」這一步要開啟的工具連結（例如你自己的 Gemini Gem 或專屬 GPT 連結），設定一次之後，每個專案點這一步都會開這個網址：`, cur);
+  if(val===null) return;
+  const links = loadVfStepLinks();
+  links[key] = val.trim();
+  localStorage.setItem('lv_video_step_links', JSON.stringify(links));
+  renderVideoFlowPage();
+  toast('✅ 已更新工具連結');
+}
+// ── 步驟名稱可自訂：預設用 VIDEO_STEPS 裡寫的名稱，改過的話存在本機、全部專案共用同一份 ──
+function loadVfStepTitles(){
+  try{ return JSON.parse(localStorage.getItem('lv_video_step_titles')) || {}; }catch(e){ return {}; }
+}
+function vfGetStepTitle(key){
+  const titles = loadVfStepTitles();
+  if(titles[key]) return titles[key];
+  const step = VIDEO_STEPS.find(s=>s.key===key);
+  return step?.title || '';
+}
+function vfRenameStepTitle(key){
+  const cur = vfGetStepTitle(key);
+  const val = prompt('修改這個步驟的名稱：', cur);
+  if(val===null || !val.trim()) return;
+  const titles = loadVfStepTitles();
+  titles[key] = val.trim();
+  localStorage.setItem('lv_video_step_titles', JSON.stringify(titles));
+  renderVideoFlowPage();
+  toast('✅ 已更新步驟名稱');
+}
+function vfOpenTool(key){
+  const url = vfGetStepUrl(key);
+  if(url) window.open(url, '_blank', 'noopener');
+  else toast('這一步還沒設定工具連結，點旁邊的鉛筆圖示先設定一次');
+}
+let vfState = { expandedProject:null, expandedStep:{}, stickyOpen:{}, promptEditing:false, promptPreviewExpanded:false, lyricsPromptEditing:false, lyricsPromptPreviewExpanded:false, promptOptPromptEditing:false, promptOptPromptPreviewExpanded:false, coverPromptEditing:false, coverPromptPreviewExpanded:false, titlePromptEditing:false, titlePromptPreviewExpanded:false, coverPromptTab:'video', coverShortsPromptEditing:false, coverShortsPromptPreviewExpanded:false, coverSinglePromptEditing:false, coverSinglePromptPreviewExpanded:false, capcutTab:'capcut', subtitlePromptEditing:false, subtitlePromptPreviewExpanded:false, captionPromptEditing:false, captionPromptPreviewExpanded:false, copyTab:'caption', ytTitlePromptEditing:false, ytTitlePromptPreviewExpanded:false,
+  search:'', filterStatus:'all', sortBy:'updated', showArchived:false, showStats:false,
+  wizardMode:{}, wizardStep:{}, selectedProjectId:null }; // expandedStep: {projectId: stepKey}；wizardMode 預設為精靈模式（true），只有存了 false 才代表使用者關掉、改用整條流程模式；wizardStep: {projectId: ...}；selectedProjectId: 目前在左側選單選中的專案
+const VF_STALL_DAYS = 5; // 超過幾天沒更新就顯示「停滯提醒」
+
+function loadVfLabel(){ return localStorage.getItem('lv_videoflow_label') || '影片製作流程'; }
+function saveVfLabel(v){ localStorage.setItem('lv_videoflow_label', v); pushVideoFlowSync(); }
+function renderVideoFlowNav(){
+  const el = document.getElementById('videoflow-nav-section'); if(!el) return;
+  const active = state.view==='videoflow';
+  const cnt = videoProjects.length;
+  el.innerHTML = `
+    <div class="cat-item${active?' active':''}" id="videoflow-nav-item" onclick="if(!document.getElementById('videoflow-nav-item').querySelector('.nav-rename-inp'))selectVideoFlow()">
+      <span style="font-size:14px;flex-shrink:0;line-height:1">🎬</span>
+      <span id="videoflow-nav-label" style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer" ondblclick="event.stopPropagation();startVfLabelRename()" title="雙擊改名">${esc(loadVfLabel())}</span>
+      <i class="ti ti-pencil nav-label-edit" onclick="event.stopPropagation();startVfLabelRename()" title="編輯名稱"></i>
+      ${cnt?`<span class="cat-count">${cnt}</span>`:''}
+    </div>`;
+}
+function startVfLabelRename(){
+  const labelEl = document.getElementById('videoflow-nav-label'); if(!labelEl) return;
+  const inp = document.createElement('input');
+  inp.className='nav-rename-inp';
+  inp.value = loadVfLabel();
+  inp.onclick = e=>e.stopPropagation();
+  inp.ondblclick = e=>e.stopPropagation();
+  let committed=false;
+  const commit=()=>{
+    if(committed) return; committed=true;
+    const val=inp.value.trim();
+    if(val) saveVfLabel(val);
+    renderVideoFlowNav();
+    if(state.view==='videoflow') renderVideoFlowPage();
+    if(state.view==='videoflow') document.getElementById('page-title').textContent=loadVfLabel();
+  };
+  inp.onblur=commit;
+  inp.onkeydown=e=>{
+    e.stopPropagation();
+    if(e.key==='Enter'){ inp.blur(); }
+    if(e.key==='Escape'){ committed=true; renderVideoFlowNav(); }
+  };
+  labelEl.replaceWith(inp); inp.focus(); inp.select();
+}
+function selectVideoFlow(){
+  state.view='videoflow'; state.showDue=false; state.activeCat=null; state.selected.clear();
+  render();
+}
+function vfNewProjectTitle(){
+  const n = videoProjects.length + 1;
+  return `影片專案 ${n}`;
+}
+function vfAddProject(){
+  const title = (prompt('這次影片專案的名稱／參考歌曲名稱：', vfNewProjectTitle())||'').trim();
+  if(!title) return;
+  const proj = { id: uid(), title, createdAt: Date.now(), lastEditedAt: Date.now(), completedAt:null, archived:false, hiddenSteps:[], customSteps:[], stickyNote:'', steps:{} };
+  VIDEO_STEPS.forEach(s=>{ proj.steps[s.key] = {note:'', done:false, songLink: s.key==='analyze' ? '' : undefined}; });
+  videoProjects.unshift(proj);
+  saveVideoProjects();
+  vfState.selectedProjectId = proj.id;
+  renderVideoFlowPage();
+  toast('✅ 已新增影片專案，開始逐步操作吧');
+}
+function vfRenameProject(id){
+  const p = videoProjects.find(x=>x.id===id); if(!p) return;
+  const val = prompt('修改專案名稱：', p.title);
+  if(val===null || !val.trim()) return;
+  p.title = val.trim();
+  p.lastEditedAt = Date.now();
+  saveVideoProjects(); renderVideoFlowPage();
+}
+function vfDeleteProject(id){
+  if(!confirm('確定要刪除這個影片專案的所有進度紀錄嗎？此動作無法復原。')) return;
+  videoProjects = videoProjects.filter(x=>x.id!==id);
+  if(vfState.selectedProjectId===id){
+    const list = vfGetFilteredSortedProjects();
+    vfState.selectedProjectId = list.length ? list[0].id : null;
+  }
+  saveVideoProjects(); renderVideoFlowPage();
+  toast('🗑️ 已刪除影片專案');
+}
+function vfSelectProject(id){
+  vfState.selectedProjectId = id;
+  renderVideoFlowPage();
+  const main = document.getElementById('vf-main'); if(main) main.scrollIntoView({behavior:'smooth', block:'start'});
+}
+function vfToggleProject(id){
+  const opening = vfState.expandedProject !== id;
+  vfState.expandedProject = opening ? id : null;
+  renderVideoFlowPage();
+  if(opening){
+    setTimeout(()=>{
+      const card = document.querySelector(`[onclick*="vfToggleProject('${id}')"]`);
+      if(card) card.scrollIntoView({behavior:'smooth', block:'start'});
+    }, 60);
+  }
+}
+// ── 精靈模式：一次只顯示目前這一步，做完自動跳下一步。現在是「預設模式」，
+//    只有使用者主動關閉過的專案（存 false）才會改用整條流程模式，其餘一律當作開啟。
+function vfIsWizardMode(projectId){
+  const v = vfState.wizardMode[projectId];
+  return v===undefined ? true : v;
+}
+function vfToggleWizardMode(projectId){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  const turningOn = !vfIsWizardMode(projectId);
+  vfState.wizardMode[projectId] = turningOn;
+  if(turningOn){
+    const visible = vfVisibleSteps(p);
+    const next = visible.find(s=>!p.steps[s.key]?.done) || visible[visible.length-1];
+    vfState.wizardStep[projectId] = next ? next.key : null;
+    vfState.expandedStep[projectId] = vfState.wizardStep[projectId];
+  }
+  renderVideoFlowPage();
+  if(turningOn) vfScrollToExpandedStep(projectId);
+}
+function vfWizardGoto(projectId, dir){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  const visible = vfVisibleSteps(p);
+  if(!visible.length) return;
+  let idx = visible.findIndex(s=>s.key===vfState.wizardStep[projectId]);
+  if(idx<0) idx = 0;
+  idx = Math.max(0, Math.min(visible.length-1, idx+dir));
+  vfState.wizardStep[projectId] = visible[idx].key;
+  vfState.expandedStep[projectId] = visible[idx].key;
+  renderVideoFlowPage();
+  vfScrollToExpandedStep(projectId);
+}
+function vfToggleStep(projectId, stepKey){
+  const opening = vfState.expandedStep[projectId] !== stepKey;
+  vfState.expandedStep[projectId] = opening ? stepKey : null;
+  renderVideoFlowPage();
+  if(opening) vfScrollToExpandedStep(projectId);
+}
+function vfToggleStepDone(projectId, stepKey, checked){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  if(!p.steps[stepKey]) p.steps[stepKey] = {note:'', done:false};
+  p.steps[stepKey].done = checked;
+  p.lastEditedAt = Date.now();
+  const idx = VIDEO_STEPS.findIndex(s=>s.key===stepKey);
+  const stepInfo = VIDEO_STEPS[idx];
+  const visible = vfVisibleSteps(p);
+  const doneN = vfDoneCount(p);
+  const total = vfTotalSteps(p);
+  // 全部（可見的）步驟都完成時，記錄完成時間，供統計「平均花費天數」使用
+  if(doneN>=total) p.completedAt = p.completedAt || Date.now();
+  else p.completedAt = null;
+  saveVideoProjects();
+  if(checked){
+    toast(`✅ 已完成「${stepInfo.title}」・進度 ${doneN} / ${total}`);
+  } else {
+    toast(`↩️ 已取消完成「${stepInfo.title}」`);
+  }
+  // 精靈模式下，勾完這一步就自動跳到下一個還沒完成的步驟
+  if(checked && vfIsWizardMode(projectId)){
+    const curIdx = visible.findIndex(s=>s.key===stepKey);
+    const next = visible.slice(curIdx+1).find(s=>!p.steps[s.key]?.done) || visible.find(s=>!p.steps[s.key]?.done);
+    vfState.wizardStep[projectId] = next ? next.key : stepKey;
+    vfState.expandedStep[projectId] = vfState.wizardStep[projectId];
+  }
+  renderVideoFlowPage();
+  if(checked && vfIsWizardMode(projectId)) vfScrollToExpandedStep(projectId);
+}
+function vfUpdateStepNote(projectId, stepKey, value){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  if(!p.steps[stepKey]) p.steps[stepKey] = {note:'', done:false};
+  p.steps[stepKey].note = value;
+  p.lastEditedAt = Date.now();
+  saveVideoProjects();
+  // 更新進度數字但不整頁重繪，避免打字打到一半游標跳掉
+  const total = vfTotalSteps(p);
+  const badge = document.getElementById('vf-progress-'+projectId);
+  if(badge){ const n = vfDoneCount(p); badge.textContent = `${n} / ${total}`; }
+  const fill = document.getElementById('vf-fill-'+projectId);
+  if(fill){ const n = vfDoneCount(p); fill.style.width = (n/total*100)+'%'; }
+}
+// 只計算「未被略過」的步驟，讓自訂流程（例如不需要 CapCut）的進度更準確
+function vfVisibleSteps(p){ const hidden = p.hiddenSteps||[]; return VIDEO_STEPS.filter(s=>!hidden.includes(s.key)); }
+// 彈性步驟：專案自行在流程之間插入的臨時步驟（例如額外請 ChatGPT／Gemini 幫忙的小任務）
+function vfCustomSteps(p){ if(!p.customSteps) p.customSteps=[]; return p.customSteps; }
+function vfTotalSteps(p){ return vfVisibleSteps(p).length + vfCustomSteps(p).length; }
+function vfDoneCount(p){ return vfVisibleSteps(p).filter(s=>p.steps[s.key]?.done).length + vfCustomSteps(p).filter(cs=>cs.done).length; }
+// 完成一步後，把畫面捲動到剛展開的下一步，不用自己手動找
+function vfScrollToExpandedStep(projectId){
+  setTimeout(()=>{
+    const key = vfState.expandedStep[projectId]; if(!key) return;
+    const card = document.querySelector(`.vf-project-card [onclick*="vfToggleStep('${projectId}','${key}')"]`);
+    if(card) card.scrollIntoView({behavior:'smooth', block:'center'});
+  }, 60);
+}
+// ── 彈性步驟：在固定流程之間，依專案自行插入需要 ChatGPT／Gemini／其他工具協助的臨時步驟 ──
+function vfAddCustomStep(projectId, afterKey){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  const title = (prompt('這個彈性步驟要做什麼？（例如：請 Gemini 幫忙寫 Threads 貼文）','')||'').trim();
+  if(!title) return;
+  const toolInput = (prompt('要用哪個工具？輸入 1 = ChatGPT　2 = Gemini　3 = 其他（可自訂連結）','1')||'1').trim();
+  const tool = toolInput==='2' ? 'Gemini' : (toolInput==='3' ? '其他' : 'ChatGPT');
+  let customUrl = '';
+  if(tool==='其他'){ customUrl = (prompt('貼上這個工具的網址：','https://')||'').trim(); }
+  if(!p.customSteps) p.customSteps = [];
+  const cs = { id: uid(), afterKey, title, tool, customUrl, prompt:'', note:'', done:false, createdAt: Date.now() };
+  p.customSteps.push(cs);
+  p.lastEditedAt = Date.now();
+  saveVideoProjects();
+  vfState.expandedStep[p.id] = 'custom:'+cs.id;
+  renderVideoFlowPage();
+  toast('✅ 已插入彈性步驟');
+}
+function vfDeleteCustomStep(projectId, stepId){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  if(!confirm('確定要刪除這個彈性步驟嗎？')) return;
+  p.customSteps = (p.customSteps||[]).filter(cs=>cs.id!==stepId);
+  p.lastEditedAt = Date.now();
+  saveVideoProjects(); renderVideoFlowPage();
+  toast('🗑️ 已刪除彈性步驟');
+}
+function vfRenameCustomStep(projectId, stepId){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  const cs = (p.customSteps||[]).find(c=>c.id===stepId); if(!cs) return;
+  const val = prompt('修改這個彈性步驟的名稱：', cs.title);
+  if(val===null || !val.trim()) return;
+  cs.title = val.trim();
+  p.lastEditedAt = Date.now();
+  saveVideoProjects(); renderVideoFlowPage();
+}
+function vfToggleCustomStep(projectId, stepId){
+  const key = 'custom:'+stepId;
+  vfState.expandedStep[projectId] = (vfState.expandedStep[projectId]===key) ? null : key;
+  renderVideoFlowPage();
+}
+function vfToggleCustomStepDone(projectId, stepId, checked){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  const cs = (p.customSteps||[]).find(c=>c.id===stepId); if(!cs) return;
+  cs.done = checked;
+  p.lastEditedAt = Date.now();
+  saveVideoProjects(); renderVideoFlowPage();
+  toast(checked ? `✅ 已完成「${cs.title}」` : `↩️ 已取消完成「${cs.title}」`);
+}
+function vfUpdateCustomStepNote(projectId, stepId, value){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  const cs = (p.customSteps||[]).find(c=>c.id===stepId); if(!cs) return;
+  cs.note = value;
+  p.lastEditedAt = Date.now();
+  saveVideoProjects();
+  const total = vfTotalSteps(p);
+  const badge = document.getElementById('vf-progress-'+projectId);
+  if(badge){ const n = vfDoneCount(p); badge.textContent = `${n} / ${total}`; }
+  const fill = document.getElementById('vf-fill-'+projectId);
+  if(fill){ const n = vfDoneCount(p); fill.style.width = (n/total*100)+'%'; }
+}
+let _vfPromptSaveToastTimer = null;
+function vfUpdateCustomStepPrompt(projectId, stepId, value){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  const cs = (p.customSteps||[]).find(c=>c.id===stepId); if(!cs) return;
+  cs.prompt = value;
+  p.lastEditedAt = Date.now();
+  saveVideoProjects();
+  // 這個提示詞欄位其實本來就會邊打邊即時存檔，只是完全沒提示，容易讓人誤以為沒存到；
+  // 停止打字 1.2 秒後跳個小提示，讓使用者安心已經存好了
+  clearTimeout(_vfPromptSaveToastTimer);
+  _vfPromptSaveToastTimer = setTimeout(()=>{ toast('✅ 提示詞已自動儲存'); }, 1200);
+}
+function vfEditCustomStepUrl(projectId, stepId){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  const cs = (p.customSteps||[]).find(c=>c.id===stepId); if(!cs) return;
+  const val = prompt('這個工具的網址：', cs.customUrl||'https://');
+  if(val===null) return;
+  cs.customUrl = val.trim();
+  p.lastEditedAt = Date.now();
+  saveVideoProjects(); renderVideoFlowPage();
+}
+function vfCustomStepToolUrl(cs){
+  if(cs.tool==='Gemini') return 'https://gemini.google.com/';
+  if(cs.tool==='其他') return cs.customUrl || 'https://';
+  return 'https://chatgpt.com/';
+}
+function vfOpenCustomStepTool(cs){
+  const url = vfCustomStepToolUrl(cs);
+  window.open(url, '_blank', 'noopener');
+}
+function vfCopyCustomStepPrompt(projectId, stepId){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  const cs = (p.customSteps||[]).find(c=>c.id===stepId); if(!cs) return;
+  const text = cs.prompt||'';
+  const goOpen = () => vfOpenCustomStepTool(cs);
+  if(!text){ goOpen(); return; }
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>{ toast('✅ 已複製提示詞，前往 '+cs.tool); goOpen(); }).catch(goOpen);
+  } else { goOpen(); }
+}
+function vfInsertRowHTML(p, afterKey){
+  return `<div class="vf-insert-row" onclick="vfAddCustomStep('${p.id}','${afterKey}')"><i class="ti ti-plus" style="font-size:11px"></i> 插入彈性步驟（GPT／Gemini 協助）</div>`;
+}
+function vfCustomStepsAfterHTML(p, afterKey){
+  return (p.customSteps||[]).filter(cs=>cs.afterKey===afterKey).sort((a,b)=>a.createdAt-b.createdAt).map(cs=>vfCustomStepHTML(p,cs)).join('');
+}
+function vfCustomStepHTML(p, cs){
+  const stepOpen = vfState.expandedStep[p.id]===('custom:'+cs.id);
+  const toolIcon = cs.tool==='Gemini' ? '✨' : (cs.tool==='其他' ? '🔧' : '🤖');
+  return `
+    <div class="vf-step custom-step${cs.done?' done':''}">
+      <div class="vf-step-dot" onclick="vfToggleCustomStepDone('${p.id}','${cs.id}',${!cs.done})" title="標記完成 / 取消完成">${cs.done?'<i class="ti ti-check" style="font-size:13px"></i>':'<i class="ti ti-sparkles" style="font-size:12px"></i>'}</div>
+      <div class="vf-step-head" onclick="vfToggleCustomStep('${p.id}','${cs.id}')">
+        <span class="vf-step-title">🧩 ${esc(cs.title)}</span>
+        <i class="ti ti-pencil" style="font-size:10.5px;color:var(--text3);flex-shrink:0" onclick="event.stopPropagation();vfRenameCustomStep('${p.id}','${cs.id}')" title="修改步驟名稱"></i>
+        ${cs.done ? `<span class="vf-step-done-badge"><i class="ti ti-check" style="font-size:10px"></i> 已完成</span>` : ''}
+        <span class="vf-step-tool">${toolIcon} ${esc(cs.tool)}</span>
+        <i class="ti ti-trash" style="font-size:11px;color:var(--text3);flex-shrink:0" onclick="event.stopPropagation();vfDeleteCustomStep('${p.id}','${cs.id}')" title="刪除這個彈性步驟"></i>
+        <i class="ti ti-chevron-down" style="font-size:12px;color:var(--text3);margin-left:auto;transition:transform .15s;transform:rotate(${stepOpen?180:0}deg)"></i>
+      </div>
+      ${stepOpen ? `
+      <div class="vf-step-body">
+        <div class="form-group">
+          <label class="form-label">給 ${esc(cs.tool)} 的提示詞 <span class="cnt">選填，寫好之後可以一鍵複製貼過去</span></label>
+          <textarea class="inp" rows="4" placeholder="想請 ${esc(cs.tool)} 幫忙的內容，可以先寫在這裡…" oninput="vfUpdateCustomStepPrompt('${p.id}','${cs.id}',this.value)">${esc(cs.prompt||'')}</textarea>
+        </div>
+        <div class="vf-step-actions">
+          <button class="btn-ghost" style="font-size:11px;padding:5px 9px" onclick="vfCopyCustomStepPrompt('${p.id}','${cs.id}')"><i class="ti ti-copy" style="font-size:12px"></i> 複製提示詞，開啟 ${esc(cs.tool)}</button>
+          ${cs.tool==='其他' ? `<button class="icon-btn" onclick="vfEditCustomStepUrl('${p.id}','${cs.id}')" title="設定這個工具的網址"><i class="ti ti-pencil" style="font-size:12px"></i></button>` : ''}
+        </div>
+        <textarea class="inp" rows="3" placeholder="貼上這一步的產出／備註…" oninput="vfUpdateCustomStepNote('${p.id}','${cs.id}',this.value)">${esc(cs.note||'')}</textarea>
+      </div>` : ''}
+    </div>`;
+}
+// ── 略過步驟：有些專案用不到某幾步（例如不用 CapCut），可以標記略過，進度與「下一步」都會自動跳過它 ──
+function vfToggleStepHidden(projectId, stepKey){
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  if(!p.hiddenSteps) p.hiddenSteps = [];
+  const i = p.hiddenSteps.indexOf(stepKey);
+  if(i>-1) p.hiddenSteps.splice(i,1); else p.hiddenSteps.push(stepKey);
+  p.lastEditedAt = Date.now();
+  saveVideoProjects();
+  renderVideoFlowPage();
+}
+// ── 便利貼：專案卡片旁的小黃便利貼，隨手記東西用，不列入流程進度 ──
+function vfToggleSticky(id){
+  vfState.stickyOpen[id] = !vfState.stickyOpen[id];
+  renderVideoFlowPage();
+}
+function vfUpdateSticky(id, value){
+  const p = videoProjects.find(x=>x.id===id); if(!p) return;
+  p.stickyNote = value;
+  p.lastEditedAt = Date.now();
+  saveVideoProjects();
+}
+// ── 封存：完成的專案可以收起來，主清單不會一直變長 ──
+function vfArchiveProject(id, archived){
+  const p = videoProjects.find(x=>x.id===id); if(!p) return;
+  p.archived = archived;
+  p.lastEditedAt = Date.now();
+  saveVideoProjects();
+  // 封存／取消封存後，如果目前選中的專案不再出現在這個清單裡（例如封存了但沒開「已封存」檢視），改選清單裡的第一個
+  if(vfState.selectedProjectId===id){
+    const list = vfGetFilteredSortedProjects();
+    if(!list.find(x=>x.id===id)) vfState.selectedProjectId = list.length ? list[0].id : null;
+  }
+  renderVideoFlowPage();
+  toast(archived ? '📦 已封存專案' : '📤 已取消封存');
+}
+// ── 複製為新專案模板：常做同系列影片時，複製一份流程設定（略過的步驟等），內容重新開始 ──
+function vfDuplicateProject(id){
+  const p = videoProjects.find(x=>x.id===id); if(!p) return;
+  const proj = { id: uid(), title: p.title+'（複製）', createdAt: Date.now(), lastEditedAt: Date.now(), completedAt:null, archived:false, hiddenSteps:[...(p.hiddenSteps||[])], customSteps:(p.customSteps||[]).map(cs=>({...cs, id:uid(), done:false, note:''})), stickyNote:'', steps:{} };
+  VIDEO_STEPS.forEach(s=>{ proj.steps[s.key] = {note:'', done:false, songLink: s.key==='analyze' ? '' : undefined}; });
+  videoProjects.unshift(proj);
+  saveVideoProjects();
+  vfState.selectedProjectId = proj.id;
+  renderVideoFlowPage();
+  toast('✅ 已建立複製專案，流程設定沿用，內容重新開始記錄');
+}
+// ── 複製整支影片的完整製作紀錄成一段文字，方便存檔備份或整理成SOP ──
+function vfCopyProjectSummary(id){
+  const p = videoProjects.find(x=>x.id===id); if(!p) return;
+  const hidden = p.hiddenSteps||[];
+  const lines = [`🎬 ${p.title}`, `建立於 ${fmtDate(new Date(p.createdAt))}`, ''];
+  const pushCustom = (afterKey) => {
+    (p.customSteps||[]).filter(cs=>cs.afterKey===afterKey).sort((a,b)=>a.createdAt-b.createdAt).forEach(cs=>{
+      lines.push(`🧩 ${cs.title}${cs.done?'（已完成）':'（未完成）'} ・ ${cs.tool}`);
+      if(cs.note) lines.push(`　${cs.note}`);
+      lines.push('');
+    });
+  };
+  pushCustom('__start__');
+  VIDEO_STEPS.forEach(s=>{
+    if(hidden.includes(s.key)){ pushCustom(s.key); return; }
+    const st = p.steps[s.key]||{};
+    lines.push(`${s.emoji} ${vfGetStepTitle(s.key)}${st.done?'（已完成）':'（未完成）'}`);
+    if(st.songLink) lines.push(`　連結：${st.songLink}`);
+    if(st.note) lines.push(`　${st.note}`);
+    lines.push('');
+    pushCustom(s.key);
+  });
+  const text = lines.join('\n');
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(()=>toast('✅ 已複製整支影片的製作紀錄')).catch(()=>toast('複製失敗，請再試一次'));
+  } else toast('複製失敗，請再試一次');
+}
+// ── 封面圖：直接上傳/替換一張縮圖，專案卡片會顯示小圖（field 區分影片／Shorts／單曲三組獨立縮圖）──
+function vfSetCoverImage(projectId, dataUrl, field){
+  field = field || 'coverImage';
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  if(!p.steps.coverStyle) p.steps.coverStyle = {note:'', done:false};
+  p.steps.coverStyle[field] = dataUrl;
+  p.lastEditedAt = Date.now();
+  saveVideoProjects();
+  renderVideoFlowPage();
+  toast('✅ 已更新封面縮圖');
+}
+function vfRemoveCoverImage(projectId, field){
+  field = field || 'coverImage';
+  const p = videoProjects.find(x=>x.id===projectId); if(!p) return;
+  if(p.steps.coverStyle) p.steps.coverStyle[field] = '';
+  saveVideoProjects(); renderVideoFlowPage();
+}
+function vfCoverImgError(imgEl){
+  const div = document.createElement('div');
+  div.className = 'vf-cover-thumb-lg';
+  div.style.cssText = 'display:flex;align-items:center;justify-content:center;color:var(--danger)';
+  div.title = '圖片讀取失敗，網址可能已失效或該網站不允許外部連結引用';
+  div.innerHTML = '<i class="ti ti-photo-off" style="font-size:20px"></i>';
+  imgEl.replaceWith(div);
+}
+function vfIsSafeImageUrl(url){
+  try{
+    const u = new URL(url);
+    return u.protocol==='http:' || u.protocol==='https:';
+  }catch(e){ return false; }
+}
+function vfSetCoverImageFromUrl(projectId, url, field){
+  url = (url||'').trim();
+  if(!url){ toast('請先貼上圖片網址'); return; }
+  // 使用者常常忘記打 https://，直接補上，不然會被誤判成相對路徑，存進一個永遠抓不到圖的錯誤網址
+  if(!/^https?:\/\//i.test(url)) url = 'https://' + url.replace(/^\/+/, '');
+  if(!vfIsSafeImageUrl(url)){ toast('網址格式不正確，請貼上 http(s) 開頭的圖片網址'); return; }
+  vfSetCoverImage(projectId, url, field);
+}
+function vfHandleCoverFile(projectId, input, field){
+  const file = input.files && input.files[0]; if(!file) return;
+  if(file.size > 3*1024*1024){ toast('圖片檔案過大，請選擇 3MB 以下的圖片'); return; }
+  const reader = new FileReader();
+  reader.onload = () => vfSetCoverImage(projectId, reader.result, field);
+  reader.onerror = () => toast('圖片讀取失敗，請再試一次');
+  reader.readAsDataURL(file);
+}
+// ── 從文字中偵測 YouTube 連結，上傳步驟填了連結就自動顯示縮圖預覽 ──
+function vfExtractYoutubeId(text){
+  if(!text) return null;
+  const m = text.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/))([a-zA-Z0-9_-]{6,15})/);
+  return m ? m[1] : null;
+}
+// ── 搜尋／篩選／排序／封存清單切換／統計面板 ──
+function vfSetSearch(v){ vfState.search = v; vfRenderFilteredList(); }
+function vfSetFilterStatus(v){ vfState.filterStatus = v; renderVideoFlowPage(); }
+function vfSetSortBy(v){ vfState.sortBy = v; renderVideoFlowPage(); }
+function vfToggleShowArchived(){ vfState.showArchived = !vfState.showArchived; renderVideoFlowPage(); }
+function vfToggleStats(){ vfState.showStats = !vfState.showStats; renderVideoFlowPage(); }
+function vfRenderFilteredList(){
+  // 搜尋框單獨處理，避免整頁重繪讓輸入框失焦
+  const wrap = document.getElementById('vf-sidebar-list'); if(!wrap) return;
+  const list = vfGetFilteredSortedProjects();
+  if(list.length && !list.find(p=>p.id===vfState.selectedProjectId)){
+    vfState.selectedProjectId = list[0].id;
+    renderVideoFlowPage();
+    return;
+  }
+  wrap.innerHTML = list.length ? list.map(p=>vfSidebarItemHTML(p)).join('') : `<div class="ent-empty" style="padding:30px 10px;font-size:13px"><i class="ti ti-search-off"></i><br/>找不到符合條件的影片專案</div>`;
+}
+function vfGetFilteredSortedProjects(){
+  const q = (vfState.search||'').trim().toLowerCase();
+  let list = videoProjects.filter(p => !!p.archived === !!vfState.showArchived);
+  if(q) list = list.filter(p=>p.title.toLowerCase().includes(q));
+  if(vfState.filterStatus!=='all'){
+    list = list.filter(p=>{
+      const n = vfDoneCount(p), total = vfVisibleSteps(p).length;
+      if(vfState.filterStatus==='notstarted') return n===0;
+      if(vfState.filterStatus==='inprogress') return n>0 && n<total;
+      if(vfState.filterStatus==='done') return n>=total && total>0;
+      return true;
+    });
+  }
+  const sortBy = vfState.sortBy;
+  list = [...list].sort((a,b)=>{
+    if(sortBy==='created') return b.createdAt-a.createdAt;
+    if(sortBy==='title') return a.title.localeCompare(b.title,'zh-Hant');
+    return (b.lastEditedAt||b.createdAt)-(a.lastEditedAt||a.createdAt); // 預設：最後編輯時間
+  });
+  return list;
+}
+function vfComputeStats(){
+  const active = videoProjects.filter(p=>!p.archived);
+  const now = new Date(); const curMonth = now.getMonth(), curYear = now.getFullYear();
+  const completed = videoProjects.filter(p=>p.completedAt);
+  const completedThisMonth = completed.filter(p=>{ const d=new Date(p.completedAt); return d.getMonth()===curMonth && d.getFullYear()===curYear; }).length;
+  const avgDays = completed.length ? Math.round(completed.reduce((sum,p)=>sum+(p.completedAt-p.createdAt),0)/completed.length/86400000*10)/10 : null;
+  // 統計「卡最多次」的步驟：還沒做完的專案，各自的下一步是哪一個
+  const stuckCount = {};
+  active.forEach(p=>{
+    const visible = vfVisibleSteps(p);
+    const next = visible.find(s=>!p.steps[s.key]?.done);
+    if(next) stuckCount[next.key] = (stuckCount[next.key]||0)+1;
+  });
+  let stuckKey = null, stuckMax = 0;
+  Object.keys(stuckCount).forEach(k=>{ if(stuckCount[k]>stuckMax){ stuckMax=stuckCount[k]; stuckKey=k; } });
+  return { total: active.length, completedThisMonth, avgDays, stuckKey, stuckMax };
+}
+
+function renderVideoFlowPage(){
+  const el = document.getElementById('videoflow-page'); if(!el) return;
+  const list = vfGetFilteredSortedProjects();
+  const archivedCount = videoProjects.filter(p=>p.archived).length;
+  const stats = vfComputeStats();
+  // 確保有一個專案被選中（例如剛載入頁面、或選中的專案被篩選掉了）
+  if(videoProjects.length && !list.find(p=>p.id===vfState.selectedProjectId)){
+    vfState.selectedProjectId = list.length ? list[0].id : null;
+  }
+  const selected = videoProjects.find(p=>p.id===vfState.selectedProjectId);
+  el.innerHTML = `
+    <div class="ent-page" style="max-width:1080px">
+      <div class="ent-header">
+        <div>
+          <div class="ent-header-title">🎬 ${esc(loadVfLabel())}</div>
+          <div class="ent-header-sub">找歌 → 寫詞 → Suno → 封面 → 剪片 → 上傳，一次追蹤一支影片的10個步驟，點下去就能直接跳去該用的工具，也能順手記下每一步的產出。</div>
+        </div>
+      </div>
+      ${!videoProjects.length ? `<div class="ent-empty"><i class="ti ti-clapperboard"></i>還沒有任何影片專案，點下面「＋ 新增影片專案」開始追蹤第一支影片吧！<br/><br/><button class="btn-primary" onclick="vfAddProject()"><i class="ti ti-plus"></i>新增影片專案</button></div>` : `
+      <div class="vf-layout">
+        <aside class="vf-sidebar">
+          <button class="btn-primary vf-sidebar-add" onclick="vfAddProject()"><i class="ti ti-plus"></i>新增影片專案</button>
+          <div class="vf-sidebar-search"><i class="ti ti-search"></i><input placeholder="搜尋專案名稱…" value="${esc(vfState.search)}" oninput="vfSetSearch(this.value)"/></div>
+          <div class="vf-sidebar-toolrow">
+            <div class="vf-sidebar-toolbtn${vfState.showStats?' active':''}" onclick="vfToggleStats()"><i class="ti ti-chart-bar"></i>統計</div>
+            <div class="vf-sidebar-toolbtn${vfState.showArchived?' active':''}" onclick="vfToggleShowArchived()"><i class="ti ti-archive"></i>${vfState.showArchived?'進行中':`封存${archivedCount?`(${archivedCount})`:''}`}</div>
+          </div>
+          ${vfState.showArchived ? '' : `
+          <div class="vf-sidebar-toolrow">
+            <select onchange="vfSetFilterStatus(this.value)" style="flex:1;min-width:0">
+              <option value="all" ${vfState.filterStatus==='all'?'selected':''}>全部狀態</option>
+              <option value="notstarted" ${vfState.filterStatus==='notstarted'?'selected':''}>尚未開始</option>
+              <option value="inprogress" ${vfState.filterStatus==='inprogress'?'selected':''}>進行中</option>
+              <option value="done" ${vfState.filterStatus==='done'?'selected':''}>已完成</option>
+            </select>
+          </div>
+          <div class="vf-sidebar-toolrow">
+            <select onchange="vfSetSortBy(this.value)" style="flex:1;min-width:0">
+              <option value="updated" ${vfState.sortBy==='updated'?'selected':''}>依最後編輯排序</option>
+              <option value="created" ${vfState.sortBy==='created'?'selected':''}>依建立時間排序</option>
+              <option value="title" ${vfState.sortBy==='title'?'selected':''}>依名稱排序</option>
+            </select>
+          </div>`}
+          ${vfState.showStats ? `
+          <div class="vf-stats-panel" style="grid-template-columns:1fr 1fr">
+            <div class="vf-stats-card"><div class="vf-stats-num">${stats.total}</div><div class="vf-stats-label">進行中的專案</div></div>
+            <div class="vf-stats-card"><div class="vf-stats-num">${stats.completedThisMonth}</div><div class="vf-stats-label">本月完成支數</div></div>
+            <div class="vf-stats-card"><div class="vf-stats-num">${stats.avgDays!==null?stats.avgDays+' 天':'—'}</div><div class="vf-stats-label">平均花費天數</div></div>
+            <div class="vf-stats-card"><div class="vf-stats-num" style="font-size:13px">${stats.stuckKey?esc(vfGetStepTitle(stats.stuckKey)):'—'}</div><div class="vf-stats-label">最常卡關${stats.stuckMax?`（${stats.stuckMax}支）`:''}</div></div>
+          </div>` : ''}
+          <div class="vf-sidebar-list" id="vf-sidebar-list">
+            ${!list.length ? `<div class="ent-empty" style="padding:30px 10px;font-size:13px"><i class="ti ti-search-off"></i><br/>${vfState.showArchived?'還沒有封存的專案':'找不到符合條件的影片專案'}</div>`
+              : list.map(p=>vfSidebarItemHTML(p)).join('')}
+          </div>
+        </aside>
+        <main class="vf-main" id="vf-main">
+          ${selected ? vfProjectDetailHTML(selected) : `<div class="vf-main-empty"><i class="ti ti-hand-click"></i><br/>從左邊選一個影片專案，或新增一個開始追蹤</div>`}
+        </main>
+      </div>`}
+    </div>`;
+}
+function vfSidebarItemHTML(p){
+  const active = vfState.selectedProjectId===p.id;
+  const doneN = vfDoneCount(p);
+  const total = vfTotalSteps(p);
+  const pct = total ? Math.round(doneN/total*100) : 0;
+  const isDone = doneN>=total && total>0;
+  const daysIdle = Math.floor((Date.now()-(p.lastEditedAt||p.createdAt))/86400000);
+  const isStalled = !isDone && !p.archived && daysIdle>=VF_STALL_DAYS;
+  const thumb = p.steps.coverStyle?.coverImage || p.steps.coverStyle?.coverImageShorts || p.steps.coverStyle?.coverImageSingle;
+  return `
+    <div class="vf-sidebar-item${active?' active':''}${p.archived?' archived':''}" onclick="vfSelectProject('${p.id}')">
+      ${thumb ? `<img src="${esc(thumb)}" class="vf-sidebar-thumb" alt="" onerror="this.style.display='none'"/>` : `<div class="vf-sidebar-thumb" style="display:flex;align-items:center;justify-content:center;font-size:15px">🎬</div>`}
+      <div class="vf-sidebar-item-body">
+        <div class="vf-sidebar-item-title">
+          <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.title)}</span>
+          ${isDone ? `<i class="ti ti-circle-check" style="color:#2e7d32;font-size:12px;flex-shrink:0"></i>` : ''}
+          ${isStalled ? `<i class="ti ti-clock-pause" style="color:#B5591A;font-size:11px;flex-shrink:0"></i>` : ''}
+        </div>
+        <div class="vf-sidebar-item-meta">${doneN} / ${total} 步 ・ ${pct}%</div>
+        <div class="vf-sidebar-mini-bar"><div class="vf-sidebar-mini-fill" style="width:${pct}%"></div></div>
+      </div>
+    </div>`;
+}
+function vfProjectDetailHTML(p){
+  const visible = vfVisibleSteps(p);
+  const doneN = vfDoneCount(p);
+  const total = vfTotalSteps(p);
+  const pct = total ? Math.round(doneN/total*100) : 0;
+  const nextStep = visible.find(s=>!p.steps[s.key]?.done);
+  const isDone = doneN>=total && total>0;
+  const progressText = isDone ? '🎉 全部完成！' : (doneN===0 ? '尚未開始' : `目前進度：完成 ${doneN} 項，下一步「${nextStep?vfGetStepTitle(nextStep.key):''}」`);
+  const daysIdle = Math.floor((Date.now()-(p.lastEditedAt||p.createdAt))/86400000);
+  const isStalled = !isDone && !p.archived && daysIdle>=VF_STALL_DAYS;
+  const thumb = p.steps.coverStyle?.coverImage || p.steps.coverStyle?.coverImageShorts || p.steps.coverStyle?.coverImageSingle;
+  return `
+    <div class="vf-project-card expanded">
+      <div class="vf-project-head" style="cursor:default">
+        ${thumb ? `<img src="${esc(thumb)}" class="vf-thumb" alt="" onerror="this.style.display='none'"/>` : ''}
+        <div style="min-width:0;flex:1">
+          <div class="vf-project-title">
+            <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(p.title)}</span>
+            ${isDone ? `<span class="vf-done-all-badge"><i class="ti ti-check" style="font-size:9px"></i>已完成</span>` : ''}
+            ${isStalled ? `<span class="vf-stall-badge"><i class="ti ti-clock-pause" style="font-size:9px"></i>${daysIdle}天沒更新</span>` : ''}
+          </div>
+          <div class="vf-project-meta">建立於 ${fmtDate(new Date(p.createdAt))} ・ ${progressText}</div>
+          <div class="vf-progress-bar"><div class="vf-progress-fill" id="vf-fill-${p.id}" style="width:${pct}%"></div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:4px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end">
+          <span class="cat-count" id="vf-progress-${p.id}">${doneN} / ${total}</span>
+          <button class="icon-btn${vfIsWizardMode(p.id)?' active-toggle':''}" onclick="vfToggleWizardMode('${p.id}')" title="${vfIsWizardMode(p.id)?'關閉精靈模式，改看整條流程':'開啟精靈模式，一次只看一步、做完自動跳下一步'}"><i class="ti ti-wand" style="font-size:12px"></i></button>
+          <button class="icon-btn${p.stickyNote?' has-note':''}" onclick="vfToggleSticky('${p.id}')" title="便利貼備註"><i class="ti ti-note" style="font-size:12px"></i></button>
+          <button class="icon-btn" onclick="vfCopyProjectSummary('${p.id}')" title="複製整支影片的製作紀錄"><i class="ti ti-clipboard-text" style="font-size:12px"></i></button>
+          <button class="icon-btn" onclick="vfDuplicateProject('${p.id}')" title="複製為新專案（沿用流程設定）"><i class="ti ti-copy" style="font-size:12px"></i></button>
+          <button class="icon-btn" onclick="vfArchiveProject('${p.id}',${!p.archived})" title="${p.archived?'取消封存':'封存專案'}"><i class="ti ti-${p.archived?'archive-off':'archive'}" style="font-size:12px"></i></button>
+          <button class="icon-btn" onclick="vfRenameProject('${p.id}')" title="重新命名"><i class="ti ti-pencil" style="font-size:12px"></i></button>
+          <button class="icon-btn" onclick="vfDeleteProject('${p.id}')" title="刪除專案"><i class="ti ti-trash" style="font-size:12px"></i></button>
+        </div>
+      </div>
+      ${vfState.stickyOpen[p.id] ? `
+      <div class="vf-sticky-note" onclick="event.stopPropagation()">
+        <div class="vf-sticky-head"><i class="ti ti-note" style="font-size:11px"></i> 便利貼 <span class="vf-sticky-close" onclick="vfToggleSticky('${p.id}')"><i class="ti ti-x" style="font-size:11px"></i></span></div>
+        <textarea class="vf-sticky-textarea" placeholder="隨手記點東西，例如靈感、待確認事項…不會列入流程進度" oninput="vfUpdateSticky('${p.id}',this.value)">${esc(p.stickyNote||'')}</textarea>
+      </div>` : ''}
+      ${vfIsWizardMode(p.id) ? vfWizardStepsHTML(p) : `<div class="vf-steps">${vfInsertRowHTML(p,'__start__')}${VIDEO_STEPS.map((s,i)=>vfStepHTML(p,s,i)+vfCustomStepsAfterHTML(p,s.key)+vfInsertRowHTML(p,s.key)).join('')}</div>`}
+    </div>`;
+}
+function vfWizardStepsHTML(p){
+  const visible = vfVisibleSteps(p);
+  if(!visible.length){
+    return `<div class="vf-wizard"><div class="ent-empty" style="padding:30px 10px">這個專案目前沒有可執行的步驟（都被略過了）。</div></div>`;
+  }
+  let idx = visible.findIndex(s=>s.key===vfState.wizardStep[p.id]);
+  if(idx<0){
+    // 還沒有記錄目前在哪一步（例如剛選到這個專案）：預設跳到第一個還沒完成的步驟
+    const firstUndone = visible.findIndex(s=>!p.steps[s.key]?.done);
+    idx = firstUndone>=0 ? firstUndone : 0;
+  }
+  const s = visible[idx];
+  vfState.wizardStep[p.id] = s.key;
+  vfState.expandedStep[p.id] = s.key; // 精靈模式下這一步永遠是展開的
+  const origIdx = VIDEO_STEPS.findIndex(vs=>vs.key===s.key);
+  const doneN = vfDoneCount(p);
+  const total = vfTotalSteps(p);
+  const allDone = doneN>=total && total>0;
+  return `
+  <div class="vf-wizard">
+    <div class="vf-wizard-nav">
+      <button class="btn-ghost" ${idx===0?'disabled':''} onclick="vfWizardGoto('${p.id}',-1)"><i class="ti ti-chevron-left"></i> 上一步</button>
+      <span class="vf-wizard-count">第 ${idx+1} ／ ${visible.length} 步</span>
+      <button class="btn-ghost" ${idx===visible.length-1?'disabled':''} onclick="vfWizardGoto('${p.id}',1)">下一步 <i class="ti ti-chevron-right"></i></button>
+    </div>
+    ${vfStepHTML(p, s, origIdx)}
+    ${vfCustomStepsAfterHTML(p, s.key)}
+    ${allDone ? `<div class="vf-wizard-done-msg"><i class="ti ti-confetti"></i> 這支影片的所有步驟都完成了！🎉</div>` : ''}
+  </div>`;
+}
+function vfStepHTML(p, s, idx){
+  const st = p.steps[s.key] || {note:'',done:false};
+  const analyzeSummaryVal = (st.analyzeSummary!==undefined && st.analyzeSummary!==null && st.analyzeSummary!=='') ? st.analyzeSummary : ((p.steps.analyze && p.steps.analyze.note) || '');
+  const stepOpen = vfState.expandedStep[p.id]===s.key;
+  const url = vfGetStepUrl(s.key);
+  const isAnalyze = s.key==='analyze';
+  const isPromptOpt = s.key==='promptOpt';
+  const isLyrics = s.key==='lyrics';
+  const isCoverStyle = s.key==='coverStyle';
+  const isCoverTitle = s.key==='coverTitle';
+  const isCapcut = s.key==='capcut';
+  const isUpload = s.key==='upload';
+  const isCopy = s.key==='copy';
+  const isHidden = (p.hiddenSteps||[]).includes(s.key);
+  // 略過的步驟：這個專案用不到這一步（例如不用 CapCut），顯示成收合的灰階列，不計入進度
+  if(isHidden){
+    return `
+    <div class="vf-step hidden-step">
+      <div class="vf-step-dot" style="cursor:default"><i class="ti ti-minus" style="font-size:12px"></i></div>
+      <div class="vf-step-head" style="cursor:default">
+        <span class="vf-step-title" style="text-decoration:line-through">${s.emoji} ${esc(vfGetStepTitle(s.key))}</span>
+        <span class="vf-step-tool">已略過</span>
+        <span class="vf-step-skip-toggle" style="margin-left:auto" onclick="vfToggleStepHidden('${p.id}','${s.key}')"><i class="ti ti-rotate" style="font-size:10px"></i> 取消略過</span>
+      </div>
+    </div>`;
+  }
+  return `
+    <div class="vf-step${st.done?' done':''}${stepOpen?' expanded':''}">
+      <div class="vf-step-dot" onclick="vfToggleStepDone('${p.id}','${s.key}',${!st.done})" title="標記完成 / 取消完成">${st.done?'<i class="ti ti-check" style="font-size:13px"></i>':(idx+1)}</div>
+      <div class="vf-step-head" onclick="vfToggleStep('${p.id}','${s.key}')">
+        <span class="vf-step-title">${s.emoji} ${esc(vfGetStepTitle(s.key))}</span>
+        <i class="ti ti-pencil" style="font-size:10.5px;color:var(--text3);flex-shrink:0" onclick="event.stopPropagation();vfRenameStepTitle('${s.key}')" title="修改步驟名稱"></i>
+        ${st.done ? `<span class="vf-step-done-badge"><i class="ti ti-check" style="font-size:10px"></i> 已完成</span>` : ''}
+        <span class="vf-step-tool">${isLyrics ? 'ChatGPT／Gemini／Claude' : esc(s.tool)}</span>
+        <span class="vf-step-skip-toggle" onclick="event.stopPropagation();vfToggleStepHidden('${p.id}','${s.key}')" title="這個專案用不到這一步，先略過">略過</span>
+        <i class="ti ti-chevron-down" style="font-size:12px;color:var(--text3);margin-left:auto;transition:transform .15s;transform:rotate(${stepOpen?180:0}deg)"></i>
+      </div>
+      ${stepOpen ? `
+      <div class="vf-step-body">
+        ${s.desc ? `<div class="vf-step-desc">${esc(s.desc)}</div>` : ''}
+        ${(!isAnalyze && !isPromptOpt && !isLyrics && !isCoverStyle && !isCoverTitle && !isCapcut && !isCopy) ? `
+        <div class="vf-step-actions">
+          <button class="btn-ghost" style="font-size:11px;padding:5px 9px" onclick="vfOpenTool('${s.key}')"><i class="ti ti-external-link" style="font-size:12px"></i> 前往 ${esc(s.tool)}</button>
+          <button class="icon-btn" onclick="vfEditStepLink('${s.key}')" title="設定這一步要開啟的工具連結"><i class="ti ti-pencil" style="font-size:12px"></i></button>
+        </div>
+        ${!url ? `<div class="vf-step-nolink">還沒設定連結，點上面鉛筆圖示貼上你的 ${esc(s.tool)} 網址（例如專屬 Gem／GPT 連結），設定一次全部專案都能用</div>` : ''}
+        <textarea class="inp" rows="3" placeholder="${esc(s.placeholder)}" oninput="vfUpdateStepNote('${p.id}','${s.key}',this.value)">${esc(st.note||'')}</textarea>
+        ${isUpload && vfExtractYoutubeId(st.note) ? `
+        <div class="vf-yt-preview">
+          <img src="https://img.youtube.com/vi/${vfExtractYoutubeId(st.note)}/mqdefault.jpg" alt=""/>
+          <a href="https://youtu.be/${vfExtractYoutubeId(st.note)}" target="_blank" rel="noopener"><i class="ti ti-brand-youtube"></i> 開啟這支已發布的影片</a>
+        </div>` : ''}
+        ` : isPromptOpt ? `
+        <div class="form-group">
+          <label class="form-label">優化 Suno 提示詞 <span class="cnt">固定提示詞已內建，點「編輯」可修改，改完要按「儲存」才會套用到全部專案</span></label>
+          ${vfState.promptOptPromptEditing ? `
+          <textarea class="inp" id="vf-promptopt-prompt-edit" rows="8">${esc(loadVfPromptOptPrompt())}</textarea>
+          <div class="vf-step-actions" style="margin-top:8px;margin-bottom:0">
+            <button type="button" class="btn-primary" style="font-size:11px;padding:5px 10px" onclick="vfSavePromptOptPrompt()"><i class="ti ti-device-floppy" style="font-size:12px"></i> 儲存</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfCancelPromptOptPromptEdit()">取消</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfResetPromptOptPrompt()"><i class="ti ti-refresh" style="font-size:11px"></i> 還原成預設</button>
+          </div>` : `
+          <div class="sn-insp-prompt-box vf-prompt-preview${vfState.promptOptPromptPreviewExpanded?' expanded':''}"><div class="sn-insp-prompt-en" style="white-space:pre-wrap">${esc(loadVfPromptOptPrompt())}</div></div>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:6px" onclick="vfTogglePromptOptPromptPreview()"><i class="ti ti-chevron-${vfState.promptOptPromptPreviewExpanded?'up':'down'}" style="font-size:11px"></i> ${vfState.promptOptPromptPreviewExpanded?'收合':'展開查看完整內容'}</button>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:8px" onclick="vfTogglePromptOptPromptEdit()"><i class="ti ti-pencil" style="font-size:11px"></i> 編輯提示詞</button>
+          `}
+        </div>
+        <div class="form-group" style="margin-top:2px">
+          <label class="form-label" style="display:flex;align-items:center;gap:6px">
+            <span>分析結果摘要 <span class="cnt">從上一步「分析拆解喜歡的歌曲」貼過來的重點，複製時會跟上面的固定提示詞合併一起送出</span></span>
+            <button type="button" class="icon-btn" id="vf-summary-clear-${p.id}" style="margin-left:auto;flex-shrink:0;${analyzeSummaryVal?'':'display:none'}" onclick="vfClearAnalyzeSummary('${p.id}')" title="清除摘要，準備做下一首"><i class="ti ti-x" style="font-size:13px"></i></button>
+          </label>
+          <textarea class="inp" rows="4" id="vf-summary-${p.id}" placeholder="把 Gemini 分析出來的重點貼在這裡…" oninput="vfUpdateAnalyzeSummary('${p.id}',this.value);vfToggleClearBtn('vf-summary-clear-${p.id}',this.value)">${esc(analyzeSummaryVal)}</textarea>
+        </div>
+        <div class="vf-step-actions">
+          <button class="btn-ghost" style="font-size:11px;padding:5px 9px" onclick="vfCopyPromptOptPrompt('${p.id}')"><i class="ti ti-copy" style="font-size:12px"></i> 複製提示詞＋分析摘要，開啟 ChatGPT</button>
+          <button class="icon-btn" onclick="vfEditStepLink('${s.key}')" title="設定這一步要開啟的工具連結"><i class="ti ti-pencil" style="font-size:12px"></i></button>
+        </div>
+        <textarea class="inp" rows="3" placeholder="${esc(s.placeholder)}" oninput="vfUpdateStepNote('${p.id}','${s.key}',this.value)">${esc(st.note||'')}</textarea>
+        ` : isLyrics ? `
+        <div class="form-group">
+          <label class="form-label">歌詞提示詞 <span class="cnt">固定寫詞規則已內建（跟「SUNO AI → 歌詞創作」共用同一套），點「編輯」可修改，改完要按「儲存」才會套用到全部專案</span></label>
+          ${vfState.lyricsPromptEditing ? `
+          <textarea class="inp" id="vf-lyrics-prompt-edit" rows="8">${esc(loadVfLyricsPrompt())}</textarea>
+          <div class="vf-step-actions" style="margin-top:8px;margin-bottom:0">
+            <button type="button" class="btn-primary" style="font-size:11px;padding:5px 10px" onclick="vfSaveLyricsPrompt()"><i class="ti ti-device-floppy" style="font-size:12px"></i> 儲存</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfCancelLyricsPromptEdit()">取消</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfResetLyricsPrompt()"><i class="ti ti-refresh" style="font-size:11px"></i> 還原成預設</button>
+          </div>` : `
+          <div class="sn-insp-prompt-box vf-prompt-preview${vfState.lyricsPromptPreviewExpanded?' expanded':''}"><div class="sn-insp-prompt-en" style="white-space:pre-wrap">${esc(loadVfLyricsPrompt())}</div></div>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:6px" onclick="vfToggleLyricsPromptPreview()"><i class="ti ti-chevron-${vfState.lyricsPromptPreviewExpanded?'up':'down'}" style="font-size:11px"></i> ${vfState.lyricsPromptPreviewExpanded?'收合':'展開查看完整內容'}</button>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:8px" onclick="vfToggleLyricsPromptEdit()"><i class="ti ti-pencil" style="font-size:11px"></i> 編輯提示詞</button>
+          `}
+        </div>
+        <div class="form-group" style="margin-top:2px">
+          <label class="form-label" style="display:flex;align-items:center;gap:6px">
+            <span>STYLE PROMPT（這首歌的曲風提示詞） <span class="cnt">貼上「優化 Suno 提示詞」那步產出的 Style Prompt，讓 ChatGPT 照這個曲風氛圍去寫詞，複製時會跟上面的固定提示詞合併一起送出</span></span>
+            <button type="button" class="icon-btn" id="vf-styleprompt-clear-${p.id}" style="margin-left:auto;flex-shrink:0;${vfGetLyricsStylePrompt(p)?'':'display:none'}" onclick="vfClearLyricsStylePrompt('${p.id}')" title="清除，準備貼下一首的 Style Prompt"><i class="ti ti-x" style="font-size:13px"></i></button>
+          </label>
+          <textarea class="inp" rows="5" id="vf-styleprompt-${p.id}" placeholder="貼上這首歌的 Style Prompt…" oninput="vfUpdateLyricsStylePrompt('${p.id}',this.value);vfToggleClearBtn('vf-styleprompt-clear-${p.id}',this.value)">${esc(vfGetLyricsStylePrompt(p))}</textarea>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:6px" onclick="vfPullStylePromptFromPromptOpt('${p.id}')"><i class="ti ti-arrow-down" style="font-size:11px"></i> 帶入上一步的 Style Prompt</button>
+        </div>
+        <div class="form-group" style="margin-top:2px">
+          <label class="form-label" style="display:flex;align-items:center;gap:6px">
+            <span>使用者輸入欄位 <span class="cnt">固定模板，可以直接編輯填寫，複製時會跟上面的固定提示詞合併一起送出</span></span>
+            <button type="button" class="icon-btn" style="margin-left:auto;flex-shrink:0" onclick="vfResetLyricsUserInput('${p.id}')" title="還原成預設模板（清空這次填寫的內容）"><i class="ti ti-refresh" style="font-size:13px"></i></button>
+          </label>
+          <textarea class="inp" rows="5" placeholder="填寫這次要生成歌詞的需求…" oninput="vfUpdateLyricsUserInput('${p.id}',this.value)">${esc(vfGetLyricsUserInput(p))}</textarea>
+        </div>
+        <div class="vf-step-actions" style="flex-wrap:wrap">
+          ${VF_LYRICS_TOOLS.map(t=>`
+          <button class="btn-ghost" style="font-size:11px;padding:5px 9px" onclick="vfCopyLyricsPromptTo('${p.id}','${t.key}')"><i class="ti ti-copy" style="font-size:12px"></i> 複製提示詞，開啟 ${t.label}</button>
+          <button class="icon-btn" onclick="vfEditLyricsToolLink('${t.key}')" title="設定 ${t.label} 的連結"><i class="ti ti-pencil" style="font-size:12px"></i></button>
+          `).join('')}
+        </div>
+        <div style="font-size:12px;color:var(--text3);margin:-4px 0 10px;line-height:1.6">用同一份提示詞分別丟給不同工具，比較看看哪個寫出來的歌詞你最喜歡</div>
+        <textarea class="inp" rows="3" placeholder="${esc(s.placeholder)}" oninput="vfUpdateStepNote('${p.id}','${s.key}',this.value)">${esc(st.note||'')}</textarea>
+        ` : isCoverStyle ? `
+        <div class="vf-step-actions" style="margin-bottom:10px">
+          <button type="button" class="${vfState.coverPromptTab==='video'?'btn-primary':'btn-ghost'}" style="font-size:11px;padding:5px 10px" onclick="vfSetCoverPromptTab('video')">YT 影片封面版</button>
+          <button type="button" class="${vfState.coverPromptTab==='shorts'?'btn-primary':'btn-ghost'}" style="font-size:11px;padding:5px 10px" onclick="vfSetCoverPromptTab('shorts')">YT Shorts 封面版</button>
+          <button type="button" class="${vfState.coverPromptTab==='single'?'btn-primary':'btn-ghost'}" style="font-size:11px;padding:5px 10px" onclick="vfSetCoverPromptTab('single')">YT 單曲封面版</button>
+        </div>
+        ${vfState.coverPromptTab==='shorts' ? `
+        <div class="form-group">
+          <label class="form-label">Shorts 封面提示詞 <span class="cnt">9:16 直式，固定畫風規則已內建，點「編輯」可修改，改完要按「儲存」才會套用到全部專案</span></label>
+          ${vfState.coverShortsPromptEditing ? `
+          <textarea class="inp" id="vf-cover-shorts-prompt-edit" rows="8">${esc(loadVfCoverShortsPrompt())}</textarea>
+          <div class="vf-step-actions" style="margin-top:8px;margin-bottom:0">
+            <button type="button" class="btn-primary" style="font-size:11px;padding:5px 10px" onclick="vfSaveCoverShortsPrompt()"><i class="ti ti-device-floppy" style="font-size:12px"></i> 儲存</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfCancelCoverShortsPromptEdit()">取消</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfResetCoverShortsPrompt()"><i class="ti ti-refresh" style="font-size:11px"></i> 還原成預設</button>
+          </div>` : `
+          <div class="sn-insp-prompt-box vf-prompt-preview${vfState.coverShortsPromptPreviewExpanded?' expanded':''}"><div class="sn-insp-prompt-en" style="white-space:pre-wrap">${esc(loadVfCoverShortsPrompt())}</div></div>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:6px" onclick="vfToggleCoverShortsPromptPreview()"><i class="ti ti-chevron-${vfState.coverShortsPromptPreviewExpanded?'up':'down'}" style="font-size:11px"></i> ${vfState.coverShortsPromptPreviewExpanded?'收合':'展開查看完整內容'}</button>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:8px" onclick="vfToggleCoverShortsPromptEdit()"><i class="ti ti-pencil" style="font-size:11px"></i> 編輯提示詞</button>
+          `}
+        </div>
+        <div class="vf-step-actions">
+          <button class="btn-ghost" style="font-size:11px;padding:5px 9px" onclick="vfCopyCoverShortsPrompt()"><i class="ti ti-copy" style="font-size:12px"></i> 複製 Shorts 封面提示詞，開啟 Gemini</button>
+          <button class="icon-btn" onclick="vfEditStepLink('${s.key}')" title="設定這一步要開啟的工具連結"><i class="ti ti-pencil" style="font-size:12px"></i></button>
+        </div>
+        ${vfCoverUploadHTML(p, st, 'coverImageShorts')}
+        ` : vfState.coverPromptTab==='single' ? `
+        <div class="form-group">
+          <label class="form-label">單曲封面提示詞 <span class="cnt">預設內容比照 YT 影片封面版，點「編輯」可修改，改完要按「儲存」才會套用到全部專案</span></label>
+          ${vfState.coverSinglePromptEditing ? `
+          <textarea class="inp" id="vf-cover-single-prompt-edit" rows="8">${esc(loadVfCoverSinglePrompt())}</textarea>
+          <div class="vf-step-actions" style="margin-top:8px;margin-bottom:0">
+            <button type="button" class="btn-primary" style="font-size:11px;padding:5px 10px" onclick="vfSaveCoverSinglePrompt()"><i class="ti ti-device-floppy" style="font-size:12px"></i> 儲存</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfCancelCoverSinglePromptEdit()">取消</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfResetCoverSinglePrompt()"><i class="ti ti-refresh" style="font-size:11px"></i> 還原成預設</button>
+          </div>` : `
+          <div class="sn-insp-prompt-box vf-prompt-preview${vfState.coverSinglePromptPreviewExpanded?' expanded':''}"><div class="sn-insp-prompt-en" style="white-space:pre-wrap">${esc(loadVfCoverSinglePrompt())}</div></div>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:6px" onclick="vfToggleCoverSinglePromptPreview()"><i class="ti ti-chevron-${vfState.coverSinglePromptPreviewExpanded?'up':'down'}" style="font-size:11px"></i> ${vfState.coverSinglePromptPreviewExpanded?'收合':'展開查看完整內容'}</button>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:8px" onclick="vfToggleCoverSinglePromptEdit()"><i class="ti ti-pencil" style="font-size:11px"></i> 編輯提示詞</button>
+          `}
+        </div>
+        <div class="vf-step-actions">
+          <button class="btn-ghost" style="font-size:11px;padding:5px 9px" onclick="vfCopyCoverSinglePrompt()"><i class="ti ti-copy" style="font-size:12px"></i> 複製單曲封面提示詞，開啟 Gemini</button>
+          <button class="icon-btn" onclick="vfEditStepLink('${s.key}')" title="設定這一步要開啟的工具連結"><i class="ti ti-pencil" style="font-size:12px"></i></button>
+        </div>
+        ${vfCoverUploadHTML(p, st, 'coverImageSingle')}
+        ` : `
+        <div class="form-group">
+          <label class="form-label">封面圖風格提示詞 <span class="cnt">固定畫風規則已內建，點「編輯」可修改，改完要按「儲存」才會套用到全部專案</span></label>
+          ${vfState.coverPromptEditing ? `
+          <textarea class="inp" id="vf-cover-prompt-edit" rows="8">${esc(loadVfCoverPrompt())}</textarea>
+          <div class="vf-step-actions" style="margin-top:8px;margin-bottom:0">
+            <button type="button" class="btn-primary" style="font-size:11px;padding:5px 10px" onclick="vfSaveCoverPrompt()"><i class="ti ti-device-floppy" style="font-size:12px"></i> 儲存</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfCancelCoverPromptEdit()">取消</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfResetCoverPrompt()"><i class="ti ti-refresh" style="font-size:11px"></i> 還原成預設</button>
+          </div>` : `
+          <div class="sn-insp-prompt-box vf-prompt-preview${vfState.coverPromptPreviewExpanded?' expanded':''}"><div class="sn-insp-prompt-en" style="white-space:pre-wrap">${esc(loadVfCoverPrompt())}</div></div>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:6px" onclick="vfToggleCoverPromptPreview()"><i class="ti ti-chevron-${vfState.coverPromptPreviewExpanded?'up':'down'}" style="font-size:11px"></i> ${vfState.coverPromptPreviewExpanded?'收合':'展開查看完整內容'}</button>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:8px" onclick="vfToggleCoverPromptEdit()"><i class="ti ti-pencil" style="font-size:11px"></i> 編輯提示詞</button>
+          `}
+        </div>
+        <div class="vf-step-actions">
+          <button class="btn-ghost" style="font-size:11px;padding:5px 9px" onclick="vfCopyCoverPrompt()"><i class="ti ti-copy" style="font-size:12px"></i> 複製封面提示詞，開啟 Gemini</button>
+          <button class="icon-btn" onclick="vfEditStepLink('${s.key}')" title="設定這一步要開啟的工具連結"><i class="ti ti-pencil" style="font-size:12px"></i></button>
+        </div>
+        ${vfCoverUploadHTML(p, st, 'coverImage')}
+        `}
+        <textarea class="inp" rows="3" placeholder="${esc(s.placeholder)}" oninput="vfUpdateStepNote('${p.id}','${s.key}',this.value)">${esc(st.note||'')}</textarea>
+        ` : isCoverTitle ? `
+        <div class="form-group">
+          <label class="form-label">標題文字提示詞 <span class="cnt">固定規則已內建，點「編輯」可修改，改完要按「儲存」才會套用到全部專案</span></label>
+          ${vfState.titlePromptEditing ? `
+          <textarea class="inp" id="vf-title-prompt-edit" rows="8">${esc(loadVfCoverTitlePrompt())}</textarea>
+          <div class="vf-step-actions" style="margin-top:8px;margin-bottom:0">
+            <button type="button" class="btn-primary" style="font-size:11px;padding:5px 10px" onclick="vfSaveCoverTitlePrompt()"><i class="ti ti-device-floppy" style="font-size:12px"></i> 儲存</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfCancelCoverTitlePromptEdit()">取消</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfResetCoverTitlePrompt()"><i class="ti ti-refresh" style="font-size:11px"></i> 還原成預設</button>
+          </div>` : `
+          <div class="sn-insp-prompt-box vf-prompt-preview${vfState.titlePromptPreviewExpanded?' expanded':''}"><div class="sn-insp-prompt-en" style="white-space:pre-wrap">${esc(loadVfCoverTitlePrompt())}</div></div>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:6px" onclick="vfToggleCoverTitlePromptPreview()"><i class="ti ti-chevron-${vfState.titlePromptPreviewExpanded?'up':'down'}" style="font-size:11px"></i> ${vfState.titlePromptPreviewExpanded?'收合':'展開查看完整內容'}</button>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:8px" onclick="vfToggleCoverTitlePromptEdit()"><i class="ti ti-pencil" style="font-size:11px"></i> 編輯提示詞</button>
+          `}
+        </div>
+        <div class="vf-step-actions">
+          <button class="btn-ghost" style="font-size:11px;padding:5px 9px" onclick="vfCopyCoverTitlePrompt()"><i class="ti ti-copy" style="font-size:12px"></i> 複製標題提示詞，開啟 ChatGPT</button>
+          <button class="icon-btn" onclick="vfEditStepLink('${s.key}')" title="設定這一步要開啟的工具連結"><i class="ti ti-pencil" style="font-size:12px"></i></button>
+        </div>
+        <textarea class="inp" rows="3" placeholder="${esc(s.placeholder)}" oninput="vfUpdateStepNote('${p.id}','${s.key}',this.value)">${esc(st.note||'')}</textarea>
+        ` : isCapcut ? `
+        <div class="vf-step-actions" style="margin-bottom:10px">
+          <button type="button" class="${vfState.capcutTab==='capcut'?'btn-primary':'btn-ghost'}" style="font-size:11px;padding:5px 10px" onclick="vfSetCapcutTab('capcut')">CapCut</button>
+          <button type="button" class="${vfState.capcutTab==='translate'?'btn-primary':'btn-ghost'}" style="font-size:11px;padding:5px 10px" onclick="vfSetCapcutTab('translate')">字幕翻譯／繁體化（ChatGPT）</button>
+        </div>
+        ${vfState.capcutTab==='translate' ? `
+        <div class="form-group">
+          <label class="form-label">字幕翻譯提示詞 <span class="cnt">固定規則已內建，最後補上要轉換的語言／需求，點「編輯」可修改整段內容</span></label>
+          ${vfState.subtitlePromptEditing ? `
+          <textarea class="inp" id="vf-subtitle-prompt-edit" rows="8">${esc(loadVfSubtitlePrompt())}</textarea>
+          <div class="vf-step-actions" style="margin-top:8px;margin-bottom:0">
+            <button type="button" class="btn-primary" style="font-size:11px;padding:5px 10px" onclick="vfSaveSubtitlePrompt()"><i class="ti ti-device-floppy" style="font-size:12px"></i> 儲存</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfCancelSubtitlePromptEdit()">取消</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfResetSubtitlePrompt()"><i class="ti ti-refresh" style="font-size:11px"></i> 還原成預設</button>
+          </div>` : `
+          <div class="sn-insp-prompt-box vf-prompt-preview${vfState.subtitlePromptPreviewExpanded?' expanded':''}"><div class="sn-insp-prompt-en" style="white-space:pre-wrap">${esc(loadVfSubtitlePrompt())}</div></div>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:6px" onclick="vfToggleSubtitlePromptPreview()"><i class="ti ti-chevron-${vfState.subtitlePromptPreviewExpanded?'up':'down'}" style="font-size:11px"></i> ${vfState.subtitlePromptPreviewExpanded?'收合':'展開查看完整內容'}</button>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:8px" onclick="vfToggleSubtitlePromptEdit()"><i class="ti ti-pencil" style="font-size:11px"></i> 編輯提示詞</button>
+          `}
+        </div>
+        <div class="vf-step-actions">
+          <button class="btn-ghost" style="font-size:11px;padding:5px 9px" onclick="vfCopySubtitlePrompt()"><i class="ti ti-copy" style="font-size:12px"></i> 複製字幕翻譯提示詞，開啟 ChatGPT</button>
+        </div>
+        ` : `
+        <div class="vf-step-actions">
+          <button class="btn-ghost" style="font-size:11px;padding:5px 9px" onclick="vfOpenTool('${s.key}')"><i class="ti ti-external-link" style="font-size:12px"></i> 前往 ${esc(s.tool)}</button>
+          <button class="icon-btn" onclick="vfEditStepLink('${s.key}')" title="設定這一步要開啟的工具連結"><i class="ti ti-pencil" style="font-size:12px"></i></button>
+        </div>
+        ${!url ? `<div class="vf-step-nolink">還沒設定連結，點上面鉛筆圖示貼上你的 ${esc(s.tool)} 網址（例如專屬 Gem／GPT 連結），設定一次全部專案都能用</div>` : ''}
+        `}
+        <textarea class="inp" rows="3" placeholder="${esc(s.placeholder)}" oninput="vfUpdateStepNote('${p.id}','${s.key}',this.value)">${esc(st.note||'')}</textarea>
+        ` : isCopy ? `
+        <div class="vf-step-actions" style="margin-bottom:10px">
+          <button type="button" class="${vfState.copyTab==='caption'?'btn-primary':'btn-ghost'}" style="font-size:11px;padding:5px 10px" onclick="vfSetCopyTab('caption')">📝 文案</button>
+          <button type="button" class="${vfState.copyTab==='title'?'btn-primary':'btn-ghost'}" style="font-size:11px;padding:5px 10px" onclick="vfSetCopyTab('title')">🏷️ 標題</button>
+        </div>
+        ${vfState.copyTab==='title' ? `
+        <div class="form-group">
+          <label class="form-label">YouTube 標題提示詞 <span class="cnt">固定提示詞已內建，點「編輯」可修改，改完要按「儲存」才會套用到全部專案</span></label>
+          ${vfState.ytTitlePromptEditing ? `
+          <textarea class="inp" id="vf-yttitle-prompt-edit" rows="8">${esc(loadVfYtTitlePrompt())}</textarea>
+          <div class="vf-step-actions" style="margin-top:8px;margin-bottom:0">
+            <button type="button" class="btn-primary" style="font-size:11px;padding:5px 10px" onclick="vfSaveYtTitlePrompt()"><i class="ti ti-device-floppy" style="font-size:12px"></i> 儲存</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfCancelYtTitlePromptEdit()">取消</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfResetYtTitlePrompt()"><i class="ti ti-refresh" style="font-size:11px"></i> 還原成預設</button>
+          </div>` : `
+          <div class="sn-insp-prompt-box vf-prompt-preview${vfState.ytTitlePromptPreviewExpanded?' expanded':''}"><div class="sn-insp-prompt-en" style="white-space:pre-wrap">${esc(loadVfYtTitlePrompt())}</div></div>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:6px" onclick="vfToggleYtTitlePromptPreview()"><i class="ti ti-chevron-${vfState.ytTitlePromptPreviewExpanded?'up':'down'}" style="font-size:11px"></i> ${vfState.ytTitlePromptPreviewExpanded?'收合':'展開查看完整內容'}</button>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:8px" onclick="vfToggleYtTitlePromptEdit()"><i class="ti ti-pencil" style="font-size:11px"></i> 編輯提示詞</button>
+          `}
+        </div>
+        <div class="vf-step-actions">
+          <button class="btn-ghost" style="font-size:11px;padding:5px 9px" onclick="vfCopyYtTitlePrompt()"><i class="ti ti-copy" style="font-size:12px"></i> 複製標題提示詞，開啟 ChatGPT</button>
+        </div>
+        ` : `
+        <div class="form-group">
+          <label class="form-label">YouTube 音樂發布文案提示詞 <span class="cnt">固定提示詞已內建，點「編輯」可修改，改完要按「儲存」才會套用到全部專案</span></label>
+          ${vfState.captionPromptEditing ? `
+          <textarea class="inp" id="vf-caption-prompt-edit" rows="8">${esc(loadVfCaptionPrompt())}</textarea>
+          <div class="vf-step-actions" style="margin-top:8px;margin-bottom:0">
+            <button type="button" class="btn-primary" style="font-size:11px;padding:5px 10px" onclick="vfSaveCaptionPrompt()"><i class="ti ti-device-floppy" style="font-size:12px"></i> 儲存</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfCancelCaptionPromptEdit()">取消</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfResetCaptionPrompt()"><i class="ti ti-refresh" style="font-size:11px"></i> 還原成預設</button>
+          </div>` : `
+          <div class="sn-insp-prompt-box vf-prompt-preview${vfState.captionPromptPreviewExpanded?' expanded':''}"><div class="sn-insp-prompt-en" style="white-space:pre-wrap">${esc(loadVfCaptionPrompt())}</div></div>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:6px" onclick="vfToggleCaptionPromptPreview()"><i class="ti ti-chevron-${vfState.captionPromptPreviewExpanded?'up':'down'}" style="font-size:11px"></i> ${vfState.captionPromptPreviewExpanded?'收合':'展開查看完整內容'}</button>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:8px" onclick="vfToggleCaptionPromptEdit()"><i class="ti ti-pencil" style="font-size:11px"></i> 編輯提示詞</button>
+          `}
+        </div>
+        <div class="vf-step-actions">
+          <button class="btn-ghost" style="font-size:11px;padding:5px 9px" onclick="vfCopyCaptionPrompt()"><i class="ti ti-copy" style="font-size:12px"></i> 複製文案提示詞，開啟 ChatGPT</button>
+        </div>
+        `}
+        <div class="vf-step-actions">
+          <button class="btn-ghost" style="font-size:11px;padding:5px 9px" onclick="vfOpenTool('${s.key}')"><i class="ti ti-external-link" style="font-size:12px"></i> 前往 ${esc(s.tool)}</button>
+          <button class="icon-btn" onclick="vfEditStepLink('${s.key}')" title="設定這一步要開啟的工具連結"><i class="ti ti-pencil" style="font-size:12px"></i></button>
+        </div>
+        ${!url ? `<div class="vf-step-nolink">還沒設定連結，點上面鉛筆圖示貼上你的 ${esc(s.tool)} 網址，設定一次全部專案都能用</div>` : ''}
+        <textarea class="inp" rows="3" placeholder="${esc(s.placeholder)}" oninput="vfUpdateStepNote('${p.id}','${s.key}',this.value)">${esc(st.note||'')}</textarea>
+        ` : `
+        <div class="form-group">
+          <label class="form-label">分析用提示詞 <span class="cnt">最多可切換 5 個版本分別測試，點「編輯」可修改，改完要按「儲存」才會套用到全部專案</span></label>
+          <div class="vf-prompt-version-tabs">
+            ${loadVfAnalyzePromptVersions().map((v,i)=>`<button type="button" class="vf-prompt-version-tab${i===loadVfAnalyzeActiveVersion()?' active':''}" onclick="vfSwitchAnalyzeVersion(${i})">${esc(v.name||('版本 '+(i+1)))}</button>`).join('')}
+          </div>
+          ${vfState.promptEditing ? `
+          <input class="inp" id="vf-analyze-prompt-name-edit" style="margin-bottom:8px;font-size:13px" value="${esc((loadVfAnalyzePromptVersions()[loadVfAnalyzeActiveVersion()]||{}).name||('版本 '+(loadVfAnalyzeActiveVersion()+1)))}" placeholder="幫這個版本取個名字（例如：精確版、簡短版）"/>
+          <textarea class="inp" id="vf-analyze-prompt-edit" rows="8">${esc(loadVfAnalyzePrompt())}</textarea>
+          <div class="vf-step-actions" style="margin-top:8px;margin-bottom:0">
+            <button type="button" class="btn-primary" style="font-size:11px;padding:5px 10px" onclick="vfSavePrompt()"><i class="ti ti-device-floppy" style="font-size:12px"></i> 儲存</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfCancelPromptEdit()">取消</button>
+            <button type="button" class="btn-ghost" style="font-size:11px;padding:5px 10px" onclick="vfResetAnalyzePrompt()"><i class="ti ti-refresh" style="font-size:11px"></i> 還原這個版本</button>
+          </div>` : `
+          <div class="sn-insp-prompt-box vf-prompt-preview${vfState.promptPreviewExpanded?' expanded':''}"><div class="sn-insp-prompt-en" style="white-space:pre-wrap">${esc(loadVfAnalyzePrompt()) || '<span style="color:var(--text3)">這個版本還沒有內容，點下面「編輯提示詞」開始寫</span>'}</div></div>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:6px" onclick="vfTogglePromptPreview()"><i class="ti ti-chevron-${vfState.promptPreviewExpanded?'up':'down'}" style="font-size:11px"></i> ${vfState.promptPreviewExpanded?'收合':'展開查看完整內容'}</button>
+          <button type="button" class="btn-ghost" style="font-size:10.5px;padding:4px 8px;margin-top:8px" onclick="vfTogglePromptEdit()"><i class="ti ti-pencil" style="font-size:11px"></i> 編輯提示詞</button>
+          `}
+        </div>
+        <div class="form-group">
+          <label class="form-label">這次想要分析的歌曲連結</label>
+          <div style="display:flex;gap:6px;align-items:center">
+            <input class="inp" style="flex:1" id="vf-songlink-${p.id}" placeholder="貼上這次參考的 YouTube 連結" value="${esc(st.songLink||'')}" oninput="vfUpdateSongLink('${p.id}',this.value);vfToggleClearBtn('vf-songlink-clear-${p.id}',this.value)"/>
+            <button type="button" class="icon-btn" id="vf-songlink-clear-${p.id}" style="${st.songLink?'':'display:none'}" onclick="vfClearSongLink('${p.id}')" title="清除連結，準備貼下一首"><i class="ti ti-x" style="font-size:13px"></i></button>
+          </div>
+        </div>
+        <div class="vf-step-actions">
+          <button class="btn-ghost" style="font-size:11px;padding:5px 9px" onclick="vfCopyAnalyzeBundle('${p.id}')"><i class="ti ti-copy" style="font-size:12px"></i> 複製提示詞＋連結，開啟 Gemini</button>
+          <button class="icon-btn" onclick="vfEditStepLink('${s.key}')" title="設定 Gemini Gem 連結"><i class="ti ti-pencil" style="font-size:12px"></i></button>
+        </div>
+        ${!url ? `<div class="vf-step-nolink">還沒設定連結，點上面鉛筆圖示貼上你的 Gemini Gem 網址，設定一次全部專案都能用</div>` : ''}
+        `}
+      </div>` : ''}
+    </div>`;
+}
+
+
+// ══════════════════════════════
+//  每日運勢（雷諾曼占卜 ＋ 每日星座／命理小語，共用抽卡邏輯）
+// ══════════════════════════════
+let fortuneActiveTab = localStorage.getItem('lv_fortune_active_tab') || 'lenormand'; // 'lenormand' | 'zodiac'
+let zodiacSessionDraw = null; // 這次進入頁面後抽到的星座運勢（不跨頁保留，跟雷諾曼抽牌邏輯一致）
+
+// ── 開頁初始化 ──
+document.addEventListener('DOMContentLoaded', function(){
+  loadVideoProjects();
+  renderVideoFlowPage();
+});
+</script>
+</body>
+</html>
